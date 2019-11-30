@@ -14,7 +14,7 @@
 	String pw = request.getParameter("_pw");
 	String user_type = request.getParameter("_user_type");
 	
-	if(id == null || pw == null || user_type == null) response.sendRedirect("Login.jsp");
+	if(id == null || pw == null || user_type == null) response.sendRedirect("../Jsp/Login.jsp");
 	
 	if(user_type.equals("_cus")){
 		if(DB.instance.LoginCusUser(id, pw))
@@ -22,11 +22,11 @@
 			session.setAttribute("id", id);
 			session.setAttribute("sto_id", "3");//테스트코드
 			session.setAttribute("user_type", "cus_user");
-			response.sendRedirect("Main.jsp");
+			response.sendRedirect("../Frame/Main_Frame.jsp");
 		}
 		else{
 			System.out.println("로그인 실패");
-			response.sendRedirect("Login.jsp");
+			response.sendRedirect("../Jsp/Login.jsp");
 		}
 		
 	}
@@ -35,10 +35,10 @@
 		{
 			session.setAttribute("id", id);
 			session.setAttribute("user_type", "sto_user");
-			response.sendRedirect("Main.jsp");
+			response.sendRedirect("../Frame/Main_Frame.jsp");
 		}
 		else{
-			response.sendRedirect("Login.jsp");
+			response.sendRedirect("../Jsp/Login.jsp");
 		}
 	}
 %>

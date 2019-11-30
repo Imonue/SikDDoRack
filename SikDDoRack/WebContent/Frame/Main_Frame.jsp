@@ -4,13 +4,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title></title>
+<title>Insert title here</title>
 </head>
+<frameset rows = "10%,*">
+	<frame src = "../Jsp/Top.jsp">
+	<frame src = "../Jsp/Map.jsp">
+</frameset>
 <body>
-<% 
-	request.setCharacterEncoding("utf-8");
-	String id = (String)session.getAttribute("id"); 
-%>
-	<h5><%=id %>님 환영합니다!</h5> 
+
+
 </body>
 </html>

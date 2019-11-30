@@ -12,12 +12,12 @@
 	if(user_type.equals("cus_user")) {
 %>
 	<frameset rows = "10%,*">
-		<frame src = "Top.jsp" name = "top">
+		<frame src = "../Jsp/Top.jsp" name = "top">
 		<frameset cols = "20%, *">
-			<frame src = "Menu.jsp" name = "menu">
+			<frame src = "../Jsp/Menu.jsp" name = "menu">
 			<frameset rows = "50%,50%">
-				<frame src = "Cus_Status.jsp" name = "target1">
-				<frame src = "Cus_Status2.jsp" name = "target2">
+				<frame src = "../Jsp/Cus_Status.jsp" name = "target1">
+				<frame src = "../Jsp/Cus_Status2.jsp" name = "target2">
 			</frameset>
 		</frameset>
 	</frameset>

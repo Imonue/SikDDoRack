@@ -11,10 +11,10 @@
 	if(user_type.equals("sto_user")) {
 %>
 	<frameset rows = "10%,*">
-		<frame src = "Top.jsp" name = "top">
+		<frame src = "../Jsp/Top.jsp" name = "top">
 		<frameset cols = "20%, *">	
-			<frame src = "Store_Status.jsp" name = "target1">
-			<frame src = "Store_Status2.jsp" name = "target2">
+			<frame src = "../Jsp/Store_Status.jsp" name = "target1">
+			<frame src = "../Jsp/Store_Status2.jsp" name = "target2">
 		</frameset>
 	</frameset>
 <%
