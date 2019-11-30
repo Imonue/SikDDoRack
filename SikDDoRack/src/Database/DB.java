@@ -1,5 +1,7 @@
 package Database;
 import java.sql.*;
+import java.util.ArrayList;
+
 import Infomation.*;
 
 public class DB {
@@ -8,6 +10,8 @@ public class DB {
 	
 	private Connection conn;
 	private Statement stmt;
+	
+	private ArrayList<Store> storeList = new ArrayList<Store>();
 	
 	//////////////////////////Constructor/////////////////////////////
 	DB(){
@@ -21,6 +25,8 @@ public class DB {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		SetStoList();
 	}
 	
 	public void finalize() {
@@ -338,6 +344,51 @@ public class DB {
 		return reser_com;
 	}
 	
+	// 데이터 베이스에 들어있는 가게의 수를 반환 한다.
+	public int GetStoCount() {
+		int count = 0;
+		String sql = "select * from store";
+		SetStoList();
+		try {
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				count++;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return count;
+	}
+	
+	public void SetStoList() {
+		
+		String sql = "select * from store";
+		try {
+			ResultSet rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				Store store = new Store();
+				store.setSto_id(rs.getString("stoid"));
+				store.setSto_pw(rs.getString("stopw"));
+				store.setSto_name(rs.getString("stoname"));
+				store.setSto_tel(rs.getString("stotel"));
+				store.setSto_phone(rs.getString("stophone"));
+				store.setSto_type(rs.getString("stotype"));
+				store.setSto_addr(rs.getString("stoaddr"));
+				store.setSto_lati(rs.getFloat("stolati"));
+				store.setSto_longi(rs.getFloat("stolongi"));
+				store.setSto_max_table(rs.getInt("stomaxtable"));
+				store.setSto_now_table(rs.getInt("stonowtable")); 
+				store.setSto_res_pos(rs.getString("storespos"));
+				this.storeList.add(store);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	//////////////////////////Getter/Setter/////////////////////////////
 	
 	public void SetConnection(Connection conn) {
@@ -351,6 +402,14 @@ public class DB {
 	}
 	public Statement GetStatement() {
 		return this.stmt;
+	}
+
+	public ArrayList<Store> getStoreList() {
+		return storeList;
+	}
+
+	public void setStoreList(ArrayList<Store> storeList) {
+		this.storeList = storeList;
 	}
 	
 	

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+    pageEncoding="EUC-KR"
+    import = "Database.*"
+    import = "Infomation.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,32 +9,60 @@
 <title>Insert title here</title>
 </head>
 <body>
-<!-- 이미지 지도를 표시할 div 입니다 -->
-<div id="staticMap" style="width:600px;height:350px;"></div>    
+<div id="map" style="width:100%;height:350px;"></div>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5666e7f4eccb32175e7a969a96083b69"></script>
-<script>    
-// 이미지 지도에 표시할 마커입니다
-// 이미지 지도에 표시할 마커를 아래와 같이 배열로 넣어주면 여러개의 마커를 표시할 수 있습니다 
-var markers = [
-    {
-        position: new kakao.maps.LatLng(33.450701, 126.570667)
-    },
-    {
-        position: new kakao.maps.LatLng(33.450001, 126.570467), 
-        text: '텍스트를 표시할 수 있어요!' // text 옵션을 설정하면 마커 위에 텍스트를 함께 표시할 수 있습니다     
-    }
-];
+<script>
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = { 
+        center: new kakao.maps.LatLng(<%=Map.instance.getInit_lati()%>, <%=Map.instance.getInit_longi()%>), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };
 
-var staticMapContainer  = document.getElementById('staticMap'), // 이미지 지도를 표시할 div  
-    staticMapOption = { 
-        center: new kakao.maps.LatLng(33.450701, 126.570667), // 이미지 지도의 중심좌표
-        level: 3, // 이미지 지도의 확대 레벨
-        marker: markers // 이미지 지도에 표시할 마커 
-    };    
+var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
-// 이미지 지도를 생성합니다
-var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
+var makers = [];
+var iwContent
+// 마커를 표시할 위치입니다 
+<%
+for(int i = 0; i < DB.instance.GetStoCount(); i++){
+	
+%>
+	var position =  new kakao.maps.LatLng(<%=DB.instance.getStoreList().get(i).getSto_lati()%>,<%=DB.instance.getStoreList().get(i).getSto_longi()%>);
+
+	// 마커를 생성합니다
+	makers[<%=i%>] = new kakao.maps.Marker({
+	  position: position,
+	  clickable: true // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
+	});
+	
+	// 아래 코드는 위의 마커를 생성하는 코드에서 clickable: true 와 같이
+	// 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
+	// marker.setClickable(true);
+	
+	// 마커를 지도에 표시합니다.
+	makers[<%=i%>].setMap(map);
+
+	
+	// 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
+	var iwContent = "<a href ='../Frame/Customer_Frame.jsp' target = '_parent'>예약하기</a>", // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+	    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+	
+	// 인포윈도우를 생성합니다
+	var infowindow = new kakao.maps.InfoWindow({
+	    content : iwContent,
+	    removable : iwRemoveable
+	});
+	
+	// 마커에 클릭이벤트를 등록합니다
+	kakao.maps.event.addListener(makers[<%=i%>], 'click', function() {
+	      // 마커 위에 인포윈도우를 표시합니다
+	      infowindow.open(map, makers[<%=i%>]);  
+	});
+<%
+}
+%>
+	
 </script>
 </body>
 </html>
