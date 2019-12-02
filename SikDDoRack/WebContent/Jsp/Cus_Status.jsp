@@ -11,7 +11,7 @@
 <body>
 <%
 	request.setCharacterEncoding("utf-8");
-	Store store = DB.instance.GetStoUser((String)session.getAttribute("sto_id"));
+	Store store = DB.instance.GetStoUser(request.getParameter("sto_id"));
 %>
 	<table>
 		<tr>

@@ -359,6 +359,7 @@ public class DB {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		//System.out.println("Store Count : " + count);
 		return count;
 	}
 	
