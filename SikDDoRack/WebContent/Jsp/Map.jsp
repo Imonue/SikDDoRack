@@ -68,7 +68,7 @@ for(int i = 0; i < DB.instance.GetStoCount(); i++){
 	{
 		//System.out.println("음식점 위도 경도 lati : " + DB.instance.getStoreList().get(i).getSto_lati() + " longi : " + DB.instance.getStoreList().get(i).getSto_longi());
 %>
-		foodPosition[<%=foodIndex%>] = {content: '<a href='+'"../Frame/Customer_Frame.jsp"'+'target='+'"_parent"'+'>예약하기</a>', latlng: new kakao.maps.LatLng(<%=DB.instance.getStoreList().get(i).getSto_lati()%>,<%=DB.instance.getStoreList().get(i).getSto_longi()%>)};
+		foodPosition[<%=foodIndex%>] = {content: "<a href='../Frame/Customer_Frame.jsp' target='_parent'>예약하기</a>", latlng: new kakao.maps.LatLng(<%=DB.instance.getStoreList().get(i).getSto_lati()%>,<%=DB.instance.getStoreList().get(i).getSto_longi()%>)};
 <%
 		foodIndex++;
 	}
@@ -78,7 +78,7 @@ for(int i = 0; i < DB.instance.GetStoCount(); i++){
 	{		
 		//System.out.println("카페 위도 경도 lati : " + DB.instance.getStoreList().get(i).getSto_lati() + " longi : " + DB.instance.getStoreList().get(i).getSto_longi());
 %>
-		caffePosition[<%=caffeIndex%>] = {content: '<a href='+'"../Frame/Customer_Frame.jsp"'+'target='+'"_parent"'+'>예약하기</a>', latlng: new kakao.maps.LatLng(<%=DB.instance.getStoreList().get(i).getSto_lati()%>,<%=DB.instance.getStoreList().get(i).getSto_longi()%>)};
+		caffePosition[<%=caffeIndex%>] = {content: "<a href='../Frame/Customer_Frame.jsp' target='_parent'>예약하기</a>", latlng: new kakao.maps.LatLng(<%=DB.instance.getStoreList().get(i).getSto_lati()%>,<%=DB.instance.getStoreList().get(i).getSto_longi()%>)};
 <%
 		caffeIndex++;
 	}
@@ -88,7 +88,7 @@ for(int i = 0; i < DB.instance.GetStoCount(); i++){
 	{		
 		//System.out.println("PC방 위도 경도 lati : " + DB.instance.getStoreList().get(i).getSto_lati() + " longi : " + DB.instance.getStoreList().get(i).getSto_longi());
 %>
-		pcPosition[<%=pcIndex%>] = {content: '<a href='+'"../Frame/Customer_Frame.jsp"'+'target='+'"_parent"'+'>예약하기</a>', latlng: new kakao.maps.LatLng(<%=DB.instance.getStoreList().get(i).getSto_lati()%>,<%=DB.instance.getStoreList().get(i).getSto_longi()%>)};
+		pcPosition[<%=pcIndex%>] = {content: "<a href='../Frame/Customer_Frame.jsp' target='_parent'>예약하기</a>", latlng: new kakao.maps.LatLng(<%=DB.instance.getStoreList().get(i).getSto_lati()%>,<%=DB.instance.getStoreList().get(i).getSto_longi()%>)};
 <%
 		pcIndex++;
 	}
