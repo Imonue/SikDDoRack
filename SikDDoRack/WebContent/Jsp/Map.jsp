@@ -68,7 +68,7 @@ for(int i = 0; i < DB.instance.GetStoCount(); i++){
 	{
 		//System.out.println("음식점 위도 경도 lati : " + DB.instance.getStoreList().get(i).getSto_lati() + " longi : " + DB.instance.getStoreList().get(i).getSto_longi());
 %>
-		foodPosition[<%=foodIndex%>] = {content: "<a href='../Frame/Customer_Frame.jsp' target='_parent'>예약하기</a>", latlng: new kakao.maps.LatLng(<%=DB.instance.getStoreList().get(i).getSto_lati()%>,<%=DB.instance.getStoreList().get(i).getSto_longi()%>)};
+		foodPosition[<%=foodIndex%>] = {content: "<input type='button' value = '예약하기' onclick = 'reservation(<%=DB.instance.getStoreList().get(i).getSto_id()%>)'>", latlng: new kakao.maps.LatLng(<%=DB.instance.getStoreList().get(i).getSto_lati()%>,<%=DB.instance.getStoreList().get(i).getSto_longi()%>)};
 <%
 		foodIndex++;
 	}
@@ -268,7 +268,17 @@ function changeMarker(type){
         setFoodMarkers(null);
         setPCMarkers(map);  
     }    
-} 	
+}
+
+function reservation(stoid)
+{
+	var stoid = stoid;
+	<%
+		String stoid = "<script>document.writeln(stoid)</script>";
+		System.out.println("Store id : " + stoid);
+		session.setAttribute("sto_id", stoid);
+	%>
+}
 
 </script>
 </body>
