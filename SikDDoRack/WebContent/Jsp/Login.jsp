@@ -126,7 +126,7 @@ a{
 </head>
 <body>
 <div class="box">
-<form action="../Scriptlet/Login_Check.jsp" method = "post">
+<form action="../Scriptlet/Login_Check.jsp" method = "post" target = "_parents">
 	<h1 class="title">식또락<i class="fa fa-utensils"></i></h1>
 	<h1 class="title2" id="test">손님 로그인</h1>
 	<Input type = "text" name = "_id" placeholder="Username"/><p>

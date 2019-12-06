@@ -6,12 +6,13 @@ import Infomation.*;
 
 public class DB {
 	
-	public static DB instance = new DB(); //�̱���
+	public static DB instance = new DB(); //占싱깍옙占쏙옙
 	
 	private Connection conn;
 	private Statement stmt;
 	
 	private ArrayList<Store> storeList = new ArrayList<Store>();
+	private ArrayList<Store> storeTypeList = new ArrayList<Store>();
 	
 	//////////////////////////Constructor/////////////////////////////
 	DB(){
@@ -344,7 +345,7 @@ public class DB {
 		return reser_com;
 	}
 	
-	// ������ ���̽��� ����ִ� ������ ���� ��ȯ �Ѵ�.
+	// 占쏙옙占쏙옙占쏙옙 占쏙옙占싱쏙옙占쏙옙 占쏙옙占쏙옙獵占� 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙환 占싼댐옙.
 	public int GetStoCount() {
 		int count = 0;
 		String sql = "select * from store";
@@ -365,8 +366,9 @@ public class DB {
 	
 	public void SetStoList() {
 		
-		String sql = "select * from store";
+		String sql = "select * from store order by stotype";
 		try {
+			this.storeList.clear();
 			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next()) {
 				Store store = new Store();
@@ -383,6 +385,91 @@ public class DB {
 				store.setSto_now_table(rs.getInt("stonowtable")); 
 				store.setSto_res_pos(rs.getString("storespos"));
 				this.storeList.add(store);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public Store GetStoUserName(String sto_name) {
+		Store store = new Store();
+		String sql = "select * from store where stoname = '"+sto_name + "'";
+		try {
+			ResultSet rs = stmt.executeQuery(sql);
+			rs.next();
+			
+			store.setSto_id(rs.getString("stoid"));
+			store.setSto_pw(rs.getString("stopw"));
+			store.setSto_name(rs.getString("stoname"));
+			store.setSto_tel(rs.getString("stotel"));
+			store.setSto_phone(rs.getString("stophone"));
+			store.setSto_type(rs.getString("stotype"));
+			store.setSto_addr(rs.getString("stoaddr"));
+			store.setSto_lati(rs.getFloat("stolati"));
+			store.setSto_longi(rs.getFloat("stolongi"));
+			store.setSto_max_table(rs.getInt("stomaxtable"));
+			store.setSto_now_table(rs.getInt("stonowtable")); 
+			store.setSto_res_pos(rs.getString("storespos"));
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		return store;
+	}
+	
+	public float GetStoLati(String sto_name) {
+		float lati =  0.0f;
+		String sql = "select * from store where stoname = '"+sto_name + "'";
+		try {
+			ResultSet rs = stmt.executeQuery(sql);
+			rs.next();
+			
+			lati = rs.getFloat("stolati");	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		return lati;
+	}
+	
+	public float GetStoLongi(String sto_name) {
+		float longi =  0.0f;
+		String sql = "select * from store where stoname = '"+sto_name + "'";
+		try {
+			ResultSet rs = stmt.executeQuery(sql);
+			rs.next();
+			longi = rs.getFloat("stolongi");
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		return longi;
+	}
+	
+	public void SetStoTypeList(String type) {
+		
+		String sql = "select * from store where stotype = '"+type+"'";
+		try {
+			this.storeTypeList.clear();
+			ResultSet rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				Store store = new Store();
+				store.setSto_id(rs.getString("stoid"));
+				store.setSto_pw(rs.getString("stopw"));
+				store.setSto_name(rs.getString("stoname"));
+				store.setSto_tel(rs.getString("stotel"));
+				store.setSto_phone(rs.getString("stophone"));
+				store.setSto_type(rs.getString("stotype"));
+				store.setSto_addr(rs.getString("stoaddr"));
+				store.setSto_lati(rs.getFloat("stolati"));
+				store.setSto_longi(rs.getFloat("stolongi"));
+				store.setSto_max_table(rs.getInt("stomaxtable"));
+				store.setSto_now_table(rs.getInt("stonowtable")); 
+				store.setSto_res_pos(rs.getString("storespos"));
+				this.storeTypeList.add(store);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -413,5 +500,11 @@ public class DB {
 		this.storeList = storeList;
 	}
 	
-	
+	public ArrayList<Store> getStoreTypeList() {
+		return storeTypeList;
+	}
+
+	public void setStoreTypeList(ArrayList<Store> storeTypeList) {
+		this.storeTypeList = storeTypeList;
+	}
 }

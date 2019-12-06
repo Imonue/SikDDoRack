@@ -20,37 +20,53 @@
 </style>
 </head>
 <body>
-<%
-	request.setCharacterEncoding("UTF-8");
-%>
 <div id="mapwrap"> 
     <!-- 지도가 표시될 div -->
-    <div id="map" style="width:100%;height:350px;"></div>
+    <div id="map" style="width:100%;height:830px;"></div>
     <!-- 지도 위에 표시될 마커 카테고리 -->
     <div class="category">
         <ul>
-            <li id="caffeMenu" onclick="changeMarker('caffe')">
+            <li id="caffeMenu" onclick="changeMarker('카페')">
                 <span class="ico_comm ico_caffe"></span>
                 카페
             </li>
-            <li id="foodMenu" onclick="changeMarker('food')">
+            <li id="foodMenu" onclick="changeMarker('음식점')">
                 <span class="ico_comm ico_food"></span>
                 음식점
             </li>
-            <li id="pcMenu" onclick="changeMarker('pc')">
+            <li id="pcMenu" onclick="changeMarker('PC방')">
                 <span class="ico_comm ico_pc"></span>
            PC방
             </li>
         </ul>
     </div>
 </div>
-
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5666e7f4eccb32175e7a969a96083b69"></script>
 <script>
+
+<%
+request.setCharacterEncoding("UTF-8");
+
+String stoname = request.getParameter("_sto_name");
+String stotype = request.getParameter("_sto_type");
+
+if(stoname == null || stotype == null)
+{
+	stotype = "음식점";
+	Map.instance.setLati(Map.instance.getInit_lati());
+	Map.instance.setLongi(Map.instance.getInit_longi());
+}
+else{
+	Map.instance.setLati(DB.instance.GetStoLati(stoname));
+	Map.instance.setLongi(DB.instance.GetStoLongi(stoname));
+}
+
+%>
+
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = { 
-        center: new kakao.maps.LatLng(<%=Map.instance.getInit_lati()%>, <%=Map.instance.getInit_longi()%>), // 지도의 중심좌표
-        level: 3 // 지도의 확대 레벨
+        center: new kakao.maps.LatLng(<%=Map.instance.getLati()%>, <%=Map.instance.getLongi()%>), // 지도의 중심좌표
+        level:2// 지도의 확대 레벨
     };
 
 var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
@@ -63,12 +79,14 @@ var pcPosition = new Array();
 int foodIndex = 0;
 int caffeIndex = 0;
 int pcIndex = 0;
+String sto_name;
 for(int i = 0; i < DB.instance.GetStoCount(); i++){
 	if(DB.instance.getStoreList().get(i).getSto_type().equals("음식점"))
 	{
+		sto_name = DB.instance.getStoreList().get(i).getSto_name();
 		//System.out.println("음식점 위도 경도 lati : " + DB.instance.getStoreList().get(i).getSto_lati() + " longi : " + DB.instance.getStoreList().get(i).getSto_longi());
 %>
-		foodPosition[<%=foodIndex%>] = {content: "<input type='button' value = '예약하기' onclick = 'reservation(<%=DB.instance.getStoreList().get(i).getSto_id()%>)'>", latlng: new kakao.maps.LatLng(<%=DB.instance.getStoreList().get(i).getSto_lati()%>,<%=DB.instance.getStoreList().get(i).getSto_longi()%>)};
+		foodPosition[<%=foodIndex%>] = {content: "<%=DB.instance.getStoreList().get(i).getSto_name()%><p>전체 테이블 : <%=DB.instance.getStoreList().get(i).getSto_max_table()%><p>현재 테이블 : <%=DB.instance.getStoreList().get(i).getSto_now_table()%><p><a href='../Frame/Customer_Frame.jsp?_sto_name=<%=sto_name %>' target='_parent'>예약하기</a>", latlng: new kakao.maps.LatLng(<%=DB.instance.getStoreList().get(i).getSto_lati()%>,<%=DB.instance.getStoreList().get(i).getSto_longi()%>)};
 <%
 		foodIndex++;
 	}
@@ -95,6 +113,7 @@ for(int i = 0; i < DB.instance.GetStoCount(); i++){
 }
 %>
 
+
 var markerImageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/category.png';  // 마커이미지의 주소입니다. 스프라이트 이미지 입니다
 caffeMarkers = [], // 커피숍 마커 객체를 가지고 있을 배열입니다
 foodMarkers = [], // 편의점 마커 객체를 가지고 있을 배열입니다
@@ -104,7 +123,9 @@ createCaffeMarkers();
 createFoodMarkers();
 createPCMarkers();
 
-changeMarker('food');
+
+changeMarker('<%=stotype%>');
+
 
 //마커이미지의 주소와, 크기, 옵션으로 마커 이미지를 생성하여 리턴하는 함수입니다
 function createMarkerImage(src, size, options) {
@@ -125,13 +146,29 @@ function createMarker(position, image, content) {
     var infowindow = new kakao.maps.InfoWindow({
         content : iwContent,
         removable : iwRemoveable
-    });
-    
-    kakao.maps.event.addListener(marker, 'click', function() {
-        // 마커 위에 인포윈도우를 표시합니다
-        infowindow.open(map, marker);  
-  });
-    
+    }); 
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    var maplatlng = new kakao.maps.LatLng(<%=Map.instance.getLati()%>,<%=Map.instance.getLongi()%>);
+    if(maplatlng.equals(position))
+    {
+    	infowindow.open(map, marker); 
+	    kakao.maps.event.addListener(marker, 'click', function() {
+	        // 마커 위에 인포윈도우를 표시합니다
+	        infowindow.open(map, marker); 
+	        //스토어 이름 저장
+	        //
+	  });
+    }
+    else{
+   
+	    kakao.maps.event.addListener(marker, 'click', function() {
+	        // 마커 위에 인포윈도우를 표시합니다
+	        infowindow.open(map, marker); 
+	        //스토어 이름 저장
+	        //
+	  });
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////
     return marker;  
 }
 
@@ -230,7 +267,7 @@ function changeMarker(type){
     var pcMenu = document.getElementById('pcMenu');
     
     // 커피숍 카테고리가 클릭됐을 때
-    if (type === 'caffe') {
+    if (type === '카페') {
     
         // 커피숍 카테고리를 선택된 스타일로 변경하고
         caffeMenu.className = 'menu_selected';
@@ -244,7 +281,7 @@ function changeMarker(type){
         setFoodMarkers(null);
         setPCMarkers(null);
         
-    } else if (type === 'food') { // 편의점 카테고리가 클릭됐을 때
+    } else if (type === '음식점') { // 편의점 카테고리가 클릭됐을 때
     
         // 편의점 카테고리를 선택된 스타일로 변경하고
         caffeMenu.className = '';
@@ -256,7 +293,7 @@ function changeMarker(type){
         setFoodMarkers(map);
         setPCMarkers(null);
         
-    } else if (type === 'pc') { // 주차장 카테고리가 클릭됐을 때
+    } else if (type === 'PC방') { // 주차장 카테고리가 클릭됐을 때
      
         // 주차장 카테고리를 선택된 스타일로 변경하고
         caffeMenu.className = '';
@@ -270,15 +307,6 @@ function changeMarker(type){
     }    
 }
 
-function reservation(stoid)
-{
-	var stoid = stoid;
-	<%
-		String stoid = "<script>document.writeln(stoid)</script>";
-		System.out.println("Store id : " + stoid);
-		session.setAttribute("sto_id", stoid);
-	%>
-}
 
 </script>
 </body>

@@ -14,7 +14,7 @@
 	String pw = request.getParameter("_pw");
 	String user_type = request.getParameter("_user_type");
 	
-	if(id == null || pw == null || user_type == null) response.sendRedirect("../Jsp/Login.jsp");
+	if(id == null || pw == null || user_type == null) response.sendRedirect("../Frame/Login_Frame.jsp");
 	
 	if(user_type.equals("_cus")){
 		if(DB.instance.LoginCusUser(id, pw))

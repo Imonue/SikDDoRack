@@ -14,7 +14,7 @@
 	Thread.sleep(100);
 	request.setCharacterEncoding("utf-8");
 	Customer customer = DB.instance.GetCusUser((String)session.getAttribute("id"));
-	Store store = DB.instance.GetStoUser((String)session.getAttribute("sto_id"));
+	Store store = DB.instance.GetStoUserName((String)session.getAttribute("sto_name"));
 	Reservation reser = DB.instance.CheckReser(customer.getCus_id(), store.getSto_id());
 	Reservation_com reser_com = DB.instance.CheckResercom(customer.getCus_id(), store.getSto_id());
 	

@@ -1,13 +1,12 @@
-<%@page import="java.sql.*"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"
     import =  "Database.*"
     import =  "Infomation.*"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title></title>
+<meta charset="utf-8">
+<title>Insert title here</title>
 </head>
 <body>
 <% 
@@ -29,7 +28,7 @@
 					sto_name = DB.instance.getStoreTypeList().get(i).getSto_name();
 			%>
 			<tr>
-				<td><a href = "../Frame/Customer_Frame.jsp?_sto_name=<%=sto_name %>" target = "_parent"><%=sto_name %></a></td>
+				<td><a href = "../Jsp/Map.jsp?_sto_name=<%=sto_name %>&_sto_type=음식점" target = "map"><%=sto_name %></a></td>
 			</tr>
 					<%
 				}
@@ -47,7 +46,7 @@
 					sto_name = DB.instance.getStoreTypeList().get(i).getSto_name();
 			%>
 			<tr>
-				<td><a href = "../Frame/Customer_Frame.jsp?_sto_name=<%=sto_name %>" target = "_parent"><%=sto_name %></a></td>
+				<td><a href = "../Jsp/Map.jsp?_sto_name=<%=sto_name %>&_sto_type=카페" target = "map"><%=sto_name %></a></td>
 			</tr>
 					<%
 				}

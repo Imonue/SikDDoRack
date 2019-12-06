@@ -28,7 +28,7 @@
 		<Form action = "../Frame/Modify_User_Frame.jsp" method = "post" target = "_parent">
 			<input type = "submit" value = "회원 정보 수정">
 		</Form>
-		<Form action = "../Scriptlet/Logout.jsp" method = "post">
+		<Form action = "../Scriptlet/Logout.jsp" method = "post" target = "_parent">
 			<input type = "submit" value = "로그 아웃">
 		</Form>
 <%

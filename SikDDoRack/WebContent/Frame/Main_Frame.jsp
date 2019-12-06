@@ -6,9 +6,15 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<%
+	
+%>
 <frameset rows = "10%,*">
 	<frame src = "../Jsp/Top.jsp">
-	<frame src = "../Jsp/Map.jsp">
+	<frameset cols = "15%, *">
+		<frame src = "../Jsp/MapMenu.jsp">
+		<frame src = "../Jsp/Map.jsp" name = "map">
+	</frameset>
 </frameset>
 <body>
 
