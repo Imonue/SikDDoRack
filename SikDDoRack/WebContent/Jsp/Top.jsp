@@ -10,8 +10,10 @@
 <%
 	request.setCharacterEncoding("utf-8");
 	String id = "";
+	String user_type = "";
 	
 	id = (String)session.getAttribute("id");
+	user_type = (String)session.getAttribute("user_type");
 	
 	if(id == null || id.equals(""))
 	{
@@ -31,7 +33,15 @@
 		<Form action = "../Scriptlet/Logout.jsp" method = "post" target = "_parent">
 			<input type = "submit" value = "로그 아웃">
 		</Form>
-<%
+<%	
+		if (user_type.equals("sto_user"))
+		{
+			%>
+				<Form action = "../Frame/Store_Frame.jsp" method = "post" target = "_parent">
+					<input type = "submit" value = "내 가게 정보">
+				</Form>
+			<%
+		}
 	}
 %>
 </body>

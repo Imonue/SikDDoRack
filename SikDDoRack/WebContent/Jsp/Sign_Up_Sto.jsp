@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
 ::-webkit-scrollbar {
@@ -99,35 +99,35 @@ body{
 <body>
 <div class="text" >
 <form class="box" action="../Scriptlet/Sign_Up_Check.jsp" method = "post">
-	<div class="center"><h1>°¡°Ô È¸¿ø °¡ÀÔ</h1></div>
+	<div class="center"><h1>ê°€ê²Œ íšŒì› ê°€ì…</h1></div>
 	 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-	°¡°Ô ÀÌ¸§<br><Input type = "text" name = "_sto_name" placeholder="name"/><p>
+	ê°€ê²Œ ì´ë¦„<br><Input type = "text" name = "_sto_name" placeholder="name"/><p>
 	 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 	ID<br><Input type = "text" name = "_sto_id" placeholder="Username"/><p>
 	 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 	PW<br><Input type = "text" name = "_sto_pw" placeholder="Password"/><p>
 	 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-	Á¡ÁÖ ÈŞ´ëÆù ¹øÈ£<br><Input type = "text" name = "_sto_tel" placeholder="PhoneNumber"/><p>
+	ì ì£¼ íœ´ëŒ€í° ë²ˆí˜¸<br><Input type = "text" name = "_sto_tel" placeholder="PhoneNumber"/><p>
 	 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-	°¡°Ô ¹øÈ£<br><Input type = "text" name = "_sto_phone" placeholder="StorePhoneNumber"/><p>
+	ê°€ê²Œ ë²ˆí˜¸<br><Input type = "text" name = "_sto_phone" placeholder="StorePhoneNumber"/><p>
 	 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-	°¡°Ô Á¾·ù<br><select name = "_sto_type">
-			<option value = "À½½ÄÁ¡" selected>À½½ÄÁ¡</option>
-			<option value = "³ë·¡¹æ">³ë·¡¹æ</option>
-			<option value = "PC¹æ"> &nbsp;PC¹æ</option>
-			<option value = "Ä«Æä"> &nbsp; Ä«Æä</option>	
+	ê°€ê²Œ ì¢…ë¥˜<br><select name = "_sto_type">
+			<option value = "ìŒì‹ì " selected>ìŒì‹ì </option>
+			<option value = "ë…¸ë˜ë°©">ë…¸ë˜ë°©</option>
+			<option value = "PCë°©"> &nbsp;PCë°©</option>
+			<option value = "ì¹´í˜"> &nbsp; ì¹´í˜</option>	
 	</select><p>
 	 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-	°¡°Ô ÁÖ¼Ò<br><Input type = "text" name = "_sto_addr" placeholder="StoreAdress"/><p>
+	ê°€ê²Œ ì£¼ì†Œ<br><Input type = "text" name = "_sto_addr" placeholder="StoreAdress"/><p>
 	 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-	°¡°Ô À§µµ<br><Input type = "text" name = "_sto_lati" placeholder="Latitude"/><p>
+	ê°€ê²Œ ìœ„ë„<br><Input type = "text" name = "_sto_lati" placeholder="Latitude"/><p>
 	 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-	°¡°Ô °æµµ<br><Input type = "text" name = "_sto_longi" placeholder="Hardness"/><p>
+	ê°€ê²Œ ê²½ë„<br><Input type = "text" name = "_sto_longi" placeholder="Hardness"/><p>
 	 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-	°¡°Ô ÃÖ´ë Å×ÀÌºí<br><Input type = "text" name = "_sto_max_table" placeholder="Number of Table"/><p>
+	ê°€ê²Œ ìµœëŒ€ í…Œì´ë¸”<br><Input type = "text" name = "_sto_max_table" placeholder="Number of Table"/><p>
 	<input type = "hidden" name = "_check" value = "sto">
 	<div class="center">
-	<input type = "submit" value = "°¡ÀÔÇÏ±â"/> &nbsp; <input type = "reset" value = "¸®¼ÂÇÏ±â"/>
+	<input type = "submit" value = "ê°€ì…í•˜ê¸°"/> &nbsp; <input type = "reset" value = "ë¦¬ì…‹í•˜ê¸°"/>
 	</div>
 </form>
 </div>

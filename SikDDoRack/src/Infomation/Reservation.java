@@ -7,19 +7,23 @@ public class Reservation {
 	private String sto_name;
 	private String res_date;
 	private int cus_count;
+	private String cus_phone;
 	
 	public Reservation() {
 		super();
 	}
 	
-	public Reservation(String res_id, String cus_id, String sto_id, String sto_name, String res_date, int cus_count) {
+	public Reservation(String res_id, String cus_id, String sto_id, String sto_name, String res_date, int cus_count, String cus_phone) {
 		this.res_id = res_id;
 		this.cus_id = cus_id;
 		this.sto_id = sto_id;
 		this.sto_name = sto_name;
 		this.res_date = res_date;
 		this.cus_count = cus_count;
+		this.cus_phone = cus_phone;
 	}
+	
+	////////////////////////////////////////////////Getter/Setter////////////////////////////////////////////////
 	
 	public String getRes_id() {
 		return res_id;
@@ -69,5 +73,11 @@ public class Reservation {
 		this.cus_count = cus_count;
 	}
 
-	
+	public String getCus_phone() {
+		return cus_phone;
+	}
+
+	public void setCus_phone(String cus_phone) {
+		this.cus_phone = cus_phone;
+	}
 }

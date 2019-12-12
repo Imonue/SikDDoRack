@@ -10,6 +10,7 @@
 </head>
 <body>
 <%
+	//가게 정보 표시 페이지 
 	request.setCharacterEncoding("utf-8");
 	Store store = DB.instance.GetStoUserName((String)session.getAttribute("sto_name"));
 %>

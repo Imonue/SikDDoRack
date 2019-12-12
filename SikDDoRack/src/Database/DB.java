@@ -3,6 +3,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import Infomation.*;
+import Security.Security;
 
 public class DB {
 	
@@ -182,14 +183,19 @@ public class DB {
 		}
 	}
 	
-	public void AddReser(Reservation reser) {
+	public void AddReser(Reservation en_reser) {
+		// 복호화 목록 손님 아이디, 가게 아이디, 예약 날짜, 손님 핸드폰 번호
+		Reservation reser = Security.instance.DeReser(en_reser);
+		
 		try {
 			String sql = "insert into reservation values(current_timestamp(),'"
 					+reser.getCus_id() + "','"
 					+reser.getSto_id() + "','"
 					+reser.getSto_name() + "','"
 					+reser.getRes_date() + "',"
-					+reser.getCus_count() + ")";
+					+reser.getCus_count() + ",'"
+					+reser.getCus_phone() + "')"
+					;
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -241,7 +247,9 @@ public class DB {
 					+reser_com.getSto_id_com() + "','"
 					+reser_com.getSto_name_com() + "','"
 					+reser_com.getRes_date_com() + "',"
-					+reser_com.getCus_count_com() + ")";
+					+reser_com.getCus_count_com() + ",'"
+					+reser_com.getCus_phone_com() + "')"
+					;
 			System.out.println(sql);
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
@@ -299,6 +307,7 @@ public class DB {
 			reser.setSto_name(rs.getString("stoname"));
 			reser.setRes_date(rs.getString("resdate"));
 			reser.setCus_count(rs.getInt("cuscount"));
+			reser.setCus_phone(rs.getString("cusphone"));
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -321,6 +330,7 @@ public class DB {
 			reser_com.setSto_name_com(rs.getString("stoname_com"));
 			reser_com.setRes_date_com(rs.getString("resdate_com"));
 			reser_com.setCus_count_com(rs.getInt("cuscount_com"));
+			reser_com.setCus_phone_com(rs.getString("cusphone_com"));
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -341,11 +351,11 @@ public class DB {
 		reser_com.setSto_name_com(reser.getSto_name());
 		reser_com.setRes_date_com(reser.getRes_date());
 		reser_com.setCus_count_com(reser.getCus_count());
+		reser_com.setCus_phone_com(reser.getCus_phone());
 		
 		return reser_com;
 	}
 	
-	// 占쏙옙占쏙옙占쏙옙 占쏙옙占싱쏙옙占쏙옙 占쏙옙占쏙옙獵占� 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙환 占싼댐옙.
 	public int GetStoCount() {
 		int count = 0;
 		String sql = "select * from store";

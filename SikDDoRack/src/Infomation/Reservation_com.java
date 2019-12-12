@@ -8,18 +8,20 @@ public class Reservation_com {
 	private String sto_name_com;
 	private String res_date_com;
 	private int cus_count_com;
+	private String cus_phone_com;
 	
 	public Reservation_com() {
 		super();
 	}
 	
-	public Reservation_com(String res_id_com, String cus_id_com, String sto_id_com, String sto_name_com, String res_date_com, int cus_count_com) {
+	public Reservation_com(String res_id_com, String cus_id_com, String sto_id_com, String sto_name_com, String res_date_com, int cus_count_com, String cus_phone_com) {
 		this.res_id_com = res_id_com;
 		this.cus_id_com = cus_id_com;
 		this.sto_id_com = sto_id_com;
 		this.sto_name_com = sto_name_com;
 		this.res_date_com = res_date_com;
 		this.cus_count_com = cus_count_com;
+		this.cus_phone_com = cus_phone_com;
 	}
 
 	public String getRes_id_com() {
@@ -68,5 +70,13 @@ public class Reservation_com {
 
 	public void setCus_count_com(int cus_count_com) {
 		this.cus_count_com = cus_count_com;
+	}
+	
+	public String getCus_phone_com() {
+		return cus_phone_com;
+	}
+
+	public void setCus_phone_com(String cus_phone_com) {
+		this.cus_phone_com = cus_phone_com;
 	}
 }

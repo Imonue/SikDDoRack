@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     import =  "Database.*"
-    import =  "Infomation.*"%>
+    import =  "Infomation.*"
+    import =  "Security.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +12,7 @@
 <body>
 <h1>예약 신청</h1>
 <%
+	// 예약 신청을 하는 페이지, 선택한 가게에 예약이 있으면 해당 예약 정보 표시
 	Thread.sleep(100);
 	request.setCharacterEncoding("utf-8");
 	Customer customer = DB.instance.GetCusUser((String)session.getAttribute("id"));
@@ -35,11 +37,20 @@
 		}
 		
 		else if(request.getParameter("_type").equals("res_insert")) {
+			// 손님 아이디, 가게 아이디, 예약 날짜, 손님 핸드폰 번호 암호화
 			reser.setCus_id(customer.getCus_id());
 			reser.setSto_id(store.getSto_id());
-			reser.setSto_name(store.getSto_name());
 			reser.setRes_date(request.getParameter("_res_date"));
+			reser.setCus_phone(customer.getCus_phone());
+			
 			reser.setCus_count(Integer.parseInt(request.getParameter("_cus_count")));
+			reser.setSto_name(store.getSto_name());
+			
+			reser = Security.instance.EnReser(reser,"sikddorack",Security.instance.public_key);
+			
+			System.out.println("암호화 안된 목록  : "  + reser.getRes_id() + " " + reser.getCus_count());
+			System.out.println("암호화 된 목록  : "  + reser.getCus_id() + " " + reser.getSto_id());
+			
 			
 			DB.instance.AddReser(reser);
 			

@@ -46,6 +46,7 @@
 					<td>아이디</td>
 					<td>예약 시간</td>
 					<td>예약 인원</td>
+					<td>핸드폰 번호</td>
 				</tr>
 				<%
 					ResultSet rs = DB.instance.GetStoReser((String)session.getAttribute("id"));
@@ -53,12 +54,14 @@
 						String cus_id = rs.getString("cusid");
 						String res_date = rs.getString("resdate");
 						String cus_count = rs.getString("cuscount");
+						String cus_phone = rs.getString("cusphone");
 						%>
 						<tr>
 							<td><input type="checkbox" name="_cus_ids" value=<%=cus_id %>></td>
 							<td><%=cus_id %></td>
 							<td><%=res_date %></td>
 							<td><%=cus_count %></td>
+							<td><%=cus_phone %></td>
 						</tr>
 						<%
 					}
@@ -77,19 +80,22 @@
 					<td>아이디</td>
 					<td>예약 시간</td>
 					<td>예약 인원</td>
+					<td>핸드폰 번호</td>
 				</tr>
 				<%
 					ResultSet rs_com = DB.instance.GetStoResercom((String)session.getAttribute("id"));
 					while(rs_com.next()){
-						String cus_id = rs_com.getString("cusid_com");
-						String res_date = rs_com.getString("resdate_com");
-						String cus_count = rs_com.getString("cuscount_com");
+						String cus_id_com = rs_com.getString("cusid_com");
+						String res_date_com = rs_com.getString("resdate_com");
+						String cus_count_com = rs_com.getString("cuscount_com");
+						String cus_phone_com = rs_com.getString("cusphone_com");
 						%>
 						<tr>
-							<td><input type="checkbox" name="_cus_ids" value=<%=cus_id %>></td>
-							<td><%=cus_id %></td>
-							<td><%=res_date %></td>
-							<td><%=cus_count %></td>
+							<td><input type="checkbox" name="_cus_ids" value=<%=cus_id_com %>></td>
+							<td><%=cus_id_com %></td>
+							<td><%=res_date_com %></td>
+							<td><%=cus_count_com %></td>
+							<td><%=cus_phone_com %></td>
 						</tr>
 						<%
 					}

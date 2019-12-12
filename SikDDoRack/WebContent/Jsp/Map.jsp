@@ -45,6 +45,7 @@
 <script>
 
 <%
+Thread.sleep(200);
 request.setCharacterEncoding("UTF-8");
 
 String stoname = request.getParameter("_sto_name");

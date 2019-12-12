@@ -10,7 +10,7 @@
 </head>
 <body>
 <% 
-	Thread.sleep(200);
+	Thread.sleep(100);
 	request.setCharacterEncoding("utf-8");
 
 	

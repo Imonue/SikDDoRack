@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
 body{
@@ -77,18 +77,18 @@ body{
 <body>
 <div class="text">
 <form class="box" action="../Scriptlet/Sign_Up_Check.jsp" method = "post">
-	<div class="center"><h1>¼Õ´Ô È¸¿ø °¡ÀÔ</h1></div>
+	<div class="center"><h1>ì†ë‹˜ íšŒì› ê°€ì…</h1></div>
 	 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-	 ÀÌ¸§ <br><Input type = "text" name = "_cus_name" placeholder="name"/><p>
+	 ì´ë¦„ <br><Input type = "text" name = "_cus_name" placeholder="name"/><p>
 	 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 	ID<br><Input type = "text" name = "_cus_id" placeholder="Username"/><p>
 	 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;	
 	PW<br><Input type = "text" name = "_cus_pw" placeholder="Password"/><p>
 	 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-	ÈŞ´ëÆù ¹øÈ£<br><Input type = "text" name = "_cus_phone" placeholder="PhoneNumber"/><p>
+	íœ´ëŒ€í° ë²ˆí˜¸<br><Input type = "text" name = "_cus_phone" placeholder="PhoneNumber"/><p>
 	<input type = "hidden" name = "_check" value = "cus">
 	<div class="center">
-	<input type = "submit" value = "°¡ÀÔÇÏ±â"/> &nbsp; <input type = "reset" value = "¸®¼ÂÇÏ±â"/>
+	<input type = "submit" value = "ê°€ì…í•˜ê¸°"/> &nbsp; <input type = "reset" value = "ë¦¬ì…‹í•˜ê¸°"/>
 	</div>
 </form>
 </div>

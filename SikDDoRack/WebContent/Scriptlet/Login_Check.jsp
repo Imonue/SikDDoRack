@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import = "java.sql.*"%>
-<%@ page import = "Database.*" import = "Infomation.*" %>
+<%@ page import = "Database.*" 
+import = "Infomation.*" 
+import = "Security.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +13,7 @@
 <%
 	request.setCharacterEncoding("utf-8");
 	String id = request.getParameter("_id");
-	String pw = request.getParameter("_pw");
+	String pw = Security.Sha256(request.getParameter("_pw"));
 	String user_type = request.getParameter("_user_type");
 	
 	if(id == null || pw == null || user_type == null) response.sendRedirect("../Frame/Login_Frame.jsp");
@@ -20,7 +22,6 @@
 		if(DB.instance.LoginCusUser(id, pw))
 		{
 			session.setAttribute("id", id);
-			session.setAttribute("sto_id", "3");//테스트코드
 			session.setAttribute("user_type", "cus_user");
 			response.sendRedirect("../Frame/Main_Frame.jsp");
 		}
