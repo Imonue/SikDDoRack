@@ -46,7 +46,15 @@
 			reser.setCus_count(Integer.parseInt(request.getParameter("_cus_count")));
 			reser.setSto_name(store.getSto_name());
 			
-			reser = Security.instance.EnReser(reser,"sikddorack",Security.instance.public_key);
+			// IV 생성
+			String iv = Security.instance.CreateIV();
+			System.out.println("IV : " + iv);
+			
+			String key = Security.instance.CreateKey();
+			//String rsa_key = Security.instance.EnKey(key);
+			System.out.println("Cus_Status2 Key : " + key);
+			
+			reser = Security.instance.EnReser(key, reser, iv);
 			
 			System.out.println("암호화 안된 목록  : "  + reser.getRes_id() + " " + reser.getCus_count());
 			System.out.println("암호화 된 목록  : "  + reser.getCus_id() + " " + reser.getSto_id());
