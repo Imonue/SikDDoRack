@@ -8,6 +8,7 @@ import java.util.Random;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.Key;
+
  
 import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
@@ -40,7 +41,7 @@ public class Security {
 	
     
     // RSA 공개키 암호 변수
-    private Cipher rsa_cipher;
+    private Cipher rsa_cipher ;
     
     KeyPairGenerator clsKeyPairGenerator;
     KeyPair clsKeyPair; // 두개의 키(공개키, 개인키)를 갖고 있는 변수
@@ -106,26 +107,35 @@ public class Security {
     
     private String Encrypt(String aes_key, String data, String iv) throws Exception {
     	SecretKey key = GenerateKey(aes_key);
-    	System.out.println("Key : " + key);
-    	System.out.println("Encrypt Key : " + aes_key);
+    	String strPinNumber = aes_key;
+		Cipher clsCipher = Cipher.getInstance("RSA");
+		clsCipher.init( Cipher.ENCRYPT_MODE, public_key );
+		byte[] arrCipherData = clsCipher.doFinal( strPinNumber.getBytes());
+		String cipher_key = new String( Base64.encodeBase64(arrCipherData));
+		System.out.println("cipher key : " + cipher_key + " 길이는 : " + cipher_key.length());
+		
+		
         byte[] encrypted = DoFinal(Cipher.ENCRYPT_MODE, key, iv, data.getBytes("UTF-8"));
-        String cipher_data = aes_key + "=back52=gwon39=kim78=" + EncodeBase64(encrypted) +"=back52=gwon39=kim78="+iv;
-        System.out.println("Encrypt Cipher Data : " + cipher_data);
+        String cipher_data = cipher_key + "=back52=gwon39=kim78=" + EncodeBase64(encrypted) +"=back52=gwon39=kim78="+iv;
         return cipher_data;
     }
+
     
     public String Decrypt(String data) throws Exception {
     	String all[] = data.split("=back52=gwon39=kim78=");
-    	String aes_key = all[0];
+    	String cipher_key = all[0];
     	String cipher_data = all[1];
     	String iv = all[2];
     	
-    	System.out.println("Decrypt Key : " + aes_key);
-    	
-        return Decrypt(aes_key, iv, cipher_data);
+        return Decrypt(cipher_key, iv, cipher_data);
     }
      
-    private String Decrypt(String aes_key, String iv, String cipher_data) throws Exception {
+    private String Decrypt(String cipher_key, String iv, String cipher_data) throws Exception {
+    	Cipher clsCipher = Cipher.getInstance("RSA");
+		clsCipher.init( Cipher.DECRYPT_MODE, private_key );
+		byte[] arrData = clsCipher.doFinal(Base64.decodeBase64(cipher_key.getBytes()));
+		String aes_key = new String( arrData );
+
     	SecretKey key = GenerateKey(aes_key);
         byte[] decrypted = DoFinal(Cipher.DECRYPT_MODE, key, iv, DecodeBase64(cipher_data));
         return new String(decrypted, "UTF-8");
@@ -196,25 +206,28 @@ public class Security {
     public void InitRSA() {
 		try {
 			clsKeyPairGenerator = KeyPairGenerator.getInstance("RSA");
-			
 			clsKeyPairGenerator.initialize(1024);
-			clsKeyPair = clsKeyPairGenerator.genKeyPair();
+			KeyPair clsKeyPair = clsKeyPairGenerator.genKeyPair();
 			public_key = clsKeyPair.getPublic();
 			private_key = clsKeyPair.getPrivate();
 			
-			rsa_cipher = Cipher.getInstance("RSA");
 			
+			System.out.println("공개키 : " + public_key);
+			System.out.println("개인키 : " + private_key);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
     
-    public String EnKey(String aes_key, Key public_key) {
+    public String EnKey(String aes_key) {
     	try {
+    		rsa_cipher = Cipher.getInstance("RSA");
+    		//System.out.println("공개키 : "+public_key);
 			rsa_cipher.init(Cipher.ENCRYPT_MODE, public_key);
 			byte[] cipher_data = rsa_cipher.doFinal(aes_key.getBytes());
-			String cipher_key = new String(cipher_data); 
+			//System.out.println("달라지는 값 : " + cipher_data);
+			String cipher_key = EncodeBase64(cipher_data); 
 			return cipher_key;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -224,9 +237,10 @@ public class Security {
     
     public String DeKey(String cipher_key) {
     	try {
+    		rsa_cipher = Cipher.getInstance("RSA");
 			rsa_cipher.init(Cipher.DECRYPT_MODE, private_key);
 			byte[] key_data = rsa_cipher.doFinal(cipher_key.getBytes());
-			String aes_key = new String(key_data);
+			String aes_key = new String(key_data, "UTF-8");
 			return aes_key;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -244,6 +258,7 @@ public class Security {
 			en_reser.setSto_id(Security.instance.Encrypt(aes_key, reser.getSto_id(), iv));
 			en_reser.setRes_date(Security.instance.Encrypt(aes_key, reser.getRes_date(), iv));
 			en_reser.setCus_phone(Security.instance.Encrypt(aes_key, reser.getCus_phone(), iv));
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
