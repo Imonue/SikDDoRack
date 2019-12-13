@@ -10,7 +10,6 @@ public class DB {
 	public static DB instance = new DB(); //占싱깍옙占쏙옙
 	
 	private Connection conn;
-	private Statement stmt;
 	
 	private ArrayList<Store> storeList = new ArrayList<Store>();
 	private ArrayList<Store> storeTypeList = new ArrayList<Store>();
@@ -20,8 +19,7 @@ public class DB {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			//conn = DriverManager.getConnection("jdbc:mysql://localhost/sikddorack?useUnicode=yes&characterEncoding=UTF-8", "sikddorark", "1234");
-			conn = DriverManager.getConnection("jdbc:mysql://211.46.116.181:3306/sikddorack", "back", "1234");	
-			this.stmt = conn.createStatement();				
+			conn = DriverManager.getConnection("jdbc:mysql://211.46.116.181:3306/sikddorack", "back", "1234");				
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
@@ -33,7 +31,6 @@ public class DB {
 	
 	public void finalize() {
 		try {
-			stmt.close();
 			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -44,21 +41,22 @@ public class DB {
 	//////////////////////////Method/////////////////////////////
 	public void AddStoUser(Store store) {
 		try {
-			String sql = "insert into store values('"
-					+store.getSto_id() + "','"
-					+store.getSto_pw() + "','"
-					+store.getSto_name() + "','"
-					+store.getSto_phone() + "','"
-					+store.getSto_tel() + "','"
-					+store.getSto_type() + "','"
-					+store.getSto_addr() + "',"
-					+store.getSto_lati() + ","
-					+store.getSto_longi() + ","
-					+store.getSto_max_table() + ","
-					+0 +","
-					+"'false'"
-					+")";
-			stmt.executeUpdate(sql);
+			String sql = "insert into store values(?,?,?,?,?,?,?,?,?,?,?,?)";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, store.getSto_id());
+			stmt.setString(2,  store.getSto_pw());
+			stmt.setString(3,  store.getSto_name());
+			stmt.setString(4,  store.getSto_phone());
+			stmt.setString(5,  store.getSto_tel());
+			stmt.setString(6,  store.getSto_type());
+			stmt.setString(7,  store.getSto_addr());
+			stmt.setFloat(8,  store.getSto_lati());
+			stmt.setFloat(9,  store.getSto_longi());
+			stmt.setInt(10,  store.getSto_max_table());
+			stmt.setInt(11,  0);
+			stmt.setString(12,  "불가능");
+			
+			stmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -67,12 +65,17 @@ public class DB {
 	
 	public void AddCusUser(Customer cus) {
 		try {
-			stmt.executeUpdate("insert into customer values('"
-					+cus.getCus_id() + "','"
-					+cus.getCus_pw() + "','"
-					+cus.getCus_name() + "','"
-					+cus.getCus_phone() + "'"
-					+")");
+			String sql = "insert into customer values(?,?,?,?)";
+			
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			
+			stmt.setString(1, cus.getCus_id());
+			stmt.setString(2, cus.getCus_pw());
+			stmt.setString(3, cus.getCus_name());
+			stmt.setString(4, cus.getCus_phone());
+			
+			stmt.executeUpdate();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -81,9 +84,13 @@ public class DB {
 	
 	public Store GetStoUser(String sto_id) {
 		Store store = new Store();
-		String sql = "select * from store where stoid = '"+sto_id + "'";
+		String sql = "select * from store where stoid = ?";
 		try {
-			ResultSet rs = stmt.executeQuery(sql);
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			
+			stmt.setString(1, sto_id);
+			
+			ResultSet rs = stmt.executeQuery();
 			rs.next();
 			
 			store.setSto_id(rs.getString("stoid"));
@@ -108,9 +115,13 @@ public class DB {
 	
 	public Customer GetCusUser(String cus_id) {
 		Customer customer = new Customer();
-		String sql = "select * from customer where cusid = '"+cus_id + "'";
+		String sql = "select * from customer where cusid = ?";
 		try {
-			ResultSet rs = stmt.executeQuery(sql);
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			
+			stmt.setString(1, cus_id);
+			
+			ResultSet rs = stmt.executeQuery();
 			rs.next();
 			customer.setCus_id(rs.getString("cusid"));
 			customer.setCus_pw(rs.getString("cuspw"));
@@ -125,9 +136,12 @@ public class DB {
 	}
 	
 	public boolean LoginCusUser(String id, String pw) {
-		String sql = "Select * from customer where cusid = '" + id + "' and cuspw = '" + pw + "'";
+		String sql = "Select * from customer where cusid = ? and cuspw = ?";
 		try {
-			ResultSet rs = this.stmt.executeQuery(sql);
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, id);
+			stmt.setString(2, pw);
+			ResultSet rs = stmt.executeQuery();
 			if(rs.next()) {
 				return true;
 			}
@@ -139,10 +153,14 @@ public class DB {
 	}
 	
 	public boolean LoginStoUser(String id, String pw) {
-		String sql = "select * from store where stoid = '" + id + "' and stopw = '" + pw + "'";
+		String sql = "select * from store where stoid = ? and stopw = ?";
 		System.out.println(sql);
 		try {
-			ResultSet rs = this.stmt.executeQuery(sql);
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, id);
+			stmt.setString(2, pw);
+			ResultSet rs = stmt.executeQuery();
+			
 			if(rs.next()) {
 				return true;
 			}
@@ -154,16 +172,19 @@ public class DB {
 	}
 	
 	public void UpdateStoUser(Store store, String sto_id) {
-		String sql = "update store set stopw = '" 
-				+ store.getSto_pw() + "', stotel = '" 
-				+ store.getSto_tel() + "', stophone = '" 
-				+ store.getSto_phone() + "', stomaxtable = " 
-				+ store.getSto_max_table() + ", stonowtable = "
-				+ store.getSto_now_table() + ", storespos = '"
-				+ store.getSto_res_pos() + "' where stoid = '" 
-				+ sto_id + "'";
+		String sql = "update store set stopw = ?, stotel = ?, stophone = ?, stomaxtable = ?, stonowtable = ?, storespos = ? where stoid = ?";
 		try {
-			stmt.executeUpdate(sql);
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1,  store.getSto_pw());
+			stmt.setString(2,  store.getSto_tel());
+			stmt.setString(3,  store.getSto_phone());
+			stmt.setInt(4,  store.getSto_max_table());
+			stmt.setInt(5,  store.getSto_max_table());
+			stmt.setString(6,  store.getSto_res_pos());
+			stmt.setString(7,  sto_id);
+			
+			stmt.executeUpdate();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -171,12 +192,15 @@ public class DB {
 	}
 	
 	public void UpdateCusUser(Customer customer, String cus_id) {
-		String sql = "update customer set cuspw = '" 
-				+ customer.getCus_pw() + "', cusphone = '" 
-				+ customer.getCus_phone() + "' where cusid = '" 
-				+ cus_id + "'";
+		String sql = "update customer set cuspw = ?, cusphone = ? where cusid = ?";
 		try {
-			stmt.executeUpdate(sql);
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			
+			stmt.setString(1,  customer.getCus_pw());
+			stmt.setString(2,  customer.getCus_phone());
+			stmt.setString(3,  cus_id);
+		
+			stmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -188,15 +212,19 @@ public class DB {
 		Reservation reser = Security.instance.DeReser(en_reser);
 		
 		try {
-			String sql = "insert into reservation values(current_timestamp(),'"
-					+reser.getCus_id() + "','"
-					+reser.getSto_id() + "','"
-					+reser.getSto_name() + "','"
-					+reser.getRes_date() + "',"
-					+reser.getCus_count() + ",'"
-					+reser.getCus_phone() + "')"
-					;
-			stmt.executeUpdate(sql);
+			String sql = "insert into reservation(resid, cusid, stoid, stoname, resdate, cuscount, cusphone) values(current_timestamp(),?,?,?,?,?,?)";
+			
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			
+			stmt.setString(1,  reser.getCus_id());
+			stmt.setString(2,  reser.getSto_id());
+			stmt.setString(3,  reser.getSto_name());
+			stmt.setString(4,  reser.getRes_date());
+			stmt.setInt(5,  reser.getCus_count());
+			stmt.setString(6,  reser.getCus_phone());
+			
+			stmt.executeUpdate();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -204,11 +232,13 @@ public class DB {
 	}
 	
 	public ResultSet GetStoReser(String sto_id) {
-		
-		String sql = "select * from reservation where stoid = '"+sto_id+"' order by resid";
+		String sql = "select * from reservation where stoid = ? order by resid";
 		ResultSet rs = null;
 		try {
-			rs = stmt.executeQuery(sql);
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, sto_id);
+			
+			rs = stmt.executeQuery();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -218,10 +248,13 @@ public class DB {
 	
 	public ResultSet GetCusReser(String cus_id) {
 		
-		String sql = "select * from reservation where stoid = '"+cus_id+"' order by resid";
+		String sql = "select * from reservation where stoid = ? order by resid";
 		ResultSet rs = null;
 		try {
-			rs = stmt.executeQuery(sql);
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, cus_id);
+			
+			rs = stmt.executeQuery();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -231,8 +264,14 @@ public class DB {
 	
 	public void DeleteReser(String cus_id, String sto_id) {
 		try {
-			String sql = "delete from reservation where cusid = '"+cus_id+"' and stoid = '"+sto_id+"'";
-			stmt.executeUpdate(sql);
+			String sql = "delete from reservation where cusid = ? and stoid = ?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			
+			stmt.setString(1,  cus_id);
+			stmt.setString(2,  sto_id);
+	
+			stmt.executeUpdate();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -241,17 +280,20 @@ public class DB {
 	
 	public void AddResercom(Reservation_com reser_com) {
 		try {
-			String sql = "insert into reservation_com values('"
-					+reser_com.getRes_id_com() + "','"
-					+reser_com.getCus_id_com() + "','"
-					+reser_com.getSto_id_com() + "','"
-					+reser_com.getSto_name_com() + "','"
-					+reser_com.getRes_date_com() + "',"
-					+reser_com.getCus_count_com() + ",'"
-					+reser_com.getCus_phone_com() + "')"
-					;
-			System.out.println(sql);
-			stmt.executeUpdate(sql);
+			String sql = "insert into reservation_com(resid_com, cusid_com, stoid_com, stoname_com, resdate_com, cuscount_com, cusphone_com) values(?,?,?,?,?,?,?)";
+			
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			
+			stmt.setString(1,  reser_com.getRes_id_com());
+			stmt.setString(2,  reser_com.getCus_id_com());
+			stmt.setString(3,  reser_com.getSto_id_com());
+			stmt.setString(4,  reser_com.getSto_name_com());
+			stmt.setString(5,  reser_com.getRes_date_com());
+			stmt.setInt(6,  reser_com.getCus_count_com());
+			stmt.setString(7,  reser_com.getCus_phone_com());
+			
+			stmt.executeUpdate();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -260,10 +302,13 @@ public class DB {
 	
 	public ResultSet GetStoResercom(String sto_id) {
 		
-		String sql = "select * from reservation_com where stoid_com = '"+sto_id+"' order by resid_com";
+		String sql = "select * from reservation_com where stoid_com = ? order by resid_com";
 		ResultSet rs = null;
 		try {
-			rs = stmt.executeQuery(sql);
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, sto_id);
+			
+			rs = stmt.executeQuery();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -273,10 +318,13 @@ public class DB {
 	
 	public ResultSet GetCusResercom(String cus_id) {
 		
-		String sql = "select * from reservation_com where stoid_com = '"+cus_id+"' order by resid_com";
+		String sql = "select * from reservation_com where stoid_com = ? order by resid_com";
 		ResultSet rs = null;
 		try {
-			rs = stmt.executeQuery(sql);
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, cus_id);
+			
+			rs = stmt.executeQuery();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -287,8 +335,14 @@ public class DB {
 	
 	public void DeleteResercom(String cus_id, String sto_id) {
 		try {
-			String sql = "delete from reservation_com where cusid_com = '"+cus_id+"' and stoid_com = '"+sto_id+"'";
-			stmt.executeUpdate(sql);
+			String sql = "delete from reservation_com where cusid_com = ? and stoid_com = ?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			
+			stmt.setString(1,  cus_id);
+			stmt.setString(2,  sto_id);
+			
+			stmt.executeUpdate();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -297,9 +351,15 @@ public class DB {
 	
 	public Reservation CheckReser(String cus_id, String sto_id) {
 		Reservation reser = new Reservation();
-		String sql = "select * from reservation where cusid = '"+cus_id+"' and stoid = '"+sto_id+"'";
+		String sql = "select * from reservation where cusid = ? and stoid = ?";
 		try {
-			ResultSet rs = stmt.executeQuery(sql);
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			
+			stmt.setString(1, cus_id);
+			stmt.setString(2, sto_id);
+			
+			ResultSet rs = stmt.executeQuery();
+			
 			rs.next();
 			reser.setRes_id(rs.getString("resid"));
 			reser.setCus_id(rs.getString("cusid"));
@@ -320,9 +380,15 @@ public class DB {
 	
 	public Reservation_com CheckResercom(String cus_id, String sto_id) {
 		Reservation_com reser_com = new Reservation_com();
-		String sql = "select * from reservation_com where cusid_com = '"+cus_id+"' and stoid_com = '"+sto_id+"'";
+		String sql = "select * from reservation_com where cusid_com = ? and stoid_com = ?";
 		try {
-			ResultSet rs = stmt.executeQuery(sql);
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			
+			stmt.setString(1, cus_id);
+			stmt.setString(2, sto_id);
+			
+			ResultSet rs = stmt.executeQuery();
+			
 			rs.next();
 			reser_com.setRes_id_com(rs.getString("resid_com"));
 			reser_com.setCus_id_com(rs.getString("cusid_com"));
@@ -361,7 +427,9 @@ public class DB {
 		String sql = "select * from store";
 		SetStoList();
 		try {
-			ResultSet rs = stmt.executeQuery(sql);
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			
+			ResultSet rs = stmt.executeQuery();
 			
 			while(rs.next()) {
 				count++;
@@ -379,7 +447,10 @@ public class DB {
 		String sql = "select * from store order by stotype";
 		try {
 			this.storeList.clear();
-			ResultSet rs = stmt.executeQuery(sql);
+			
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			
+			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
 				Store store = new Store();
 				store.setSto_id(rs.getString("stoid"));
@@ -404,9 +475,12 @@ public class DB {
 	
 	public Store GetStoUserName(String sto_name) {
 		Store store = new Store();
-		String sql = "select * from store where stoname = '"+sto_name + "'";
+		String sql = "select * from store where stoname = ?";
 		try {
-			ResultSet rs = stmt.executeQuery(sql);
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, sto_name);
+			
+			ResultSet rs = stmt.executeQuery();
 			rs.next();
 			
 			store.setSto_id(rs.getString("stoid"));
@@ -431,9 +505,12 @@ public class DB {
 	
 	public float GetStoLati(String sto_name) {
 		float lati =  0.0f;
-		String sql = "select * from store where stoname = '"+sto_name + "'";
+		String sql = "select * from store where stoname = ?";
 		try {
-			ResultSet rs = stmt.executeQuery(sql);
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, sto_name);
+			
+			ResultSet rs = stmt.executeQuery();
 			rs.next();
 			
 			lati = rs.getFloat("stolati");	
@@ -446,9 +523,12 @@ public class DB {
 	
 	public float GetStoLongi(String sto_name) {
 		float longi =  0.0f;
-		String sql = "select * from store where stoname = '"+sto_name + "'";
+		String sql = "select * from store where stoname = ?";
 		try {
-			ResultSet rs = stmt.executeQuery(sql);
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, sto_name);
+			
+			ResultSet rs = stmt.executeQuery();
 			rs.next();
 			longi = rs.getFloat("stolongi");
 			
@@ -461,10 +541,13 @@ public class DB {
 	
 	public void SetStoTypeList(String type) {
 		
-		String sql = "select * from store where stotype = '"+type+"'";
+		String sql = "select * from store where stotype = ?";
 		try {
 			this.storeTypeList.clear();
-			ResultSet rs = stmt.executeQuery(sql);
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, type);
+			
+			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
 				Store store = new Store();
 				store.setSto_id(rs.getString("stoid"));
@@ -494,12 +577,6 @@ public class DB {
 	}
 	public Connection GetConnection() {
 		return this.conn;
-	}
-	public void SetStatement(Statement stmt) {
-		this.stmt = stmt;
-	}
-	public Statement GetStatement() {
-		return this.stmt;
 	}
 
 	public ArrayList<Store> getStoreList() {

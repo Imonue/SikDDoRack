@@ -16,18 +16,18 @@ import = "Security.*" %>
 	String pw = Security.Sha256(request.getParameter("_pw"));
 	String user_type = request.getParameter("_user_type");
 	
-	if(id == null || pw == null || user_type == null) response.sendRedirect("../Frame/Login_Frame.jsp");
+	if(id == null || pw == null || user_type == null) response.sendRedirect(WhiteList.instance.getWhitelistFrame(3));
 	
 	if(user_type.equals("_cus")){
 		if(DB.instance.LoginCusUser(id, pw))
 		{
 			session.setAttribute("id", id);
 			session.setAttribute("user_type", "cus_user");
-			response.sendRedirect("../Frame/Main_Frame.jsp");
+			response.sendRedirect(WhiteList.instance.getWhitelistFrame(0));
 		}
 		else{
 			System.out.println("로그인 실패");
-			response.sendRedirect("../Jsp/Login.jsp");
+			response.sendRedirect(WhiteList.instance.getWhitelistFrame(3));
 		}
 		
 	}
@@ -36,10 +36,10 @@ import = "Security.*" %>
 		{
 			session.setAttribute("id", id);
 			session.setAttribute("user_type", "sto_user");
-			response.sendRedirect("../Frame/Main_Frame.jsp");
+			response.sendRedirect(WhiteList.instance.getWhitelistFrame(0));
 		}
 		else{
-			response.sendRedirect("../Jsp/Login.jsp");
+			response.sendRedirect(WhiteList.instance.getWhitelistFrame(3));
 		}
 	}
 %>

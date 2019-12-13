@@ -136,6 +136,8 @@ public class Security {
 		byte[] arrData = clsCipher.doFinal(Base64.decodeBase64(cipher_key.getBytes()));
 		String aes_key = new String( arrData );
 
+		System.out.println("aes key : " + aes_key + " ±æÀÌ´Â : " + aes_key.length());
+		
     	SecretKey key = GenerateKey(aes_key);
         byte[] decrypted = DoFinal(Cipher.DECRYPT_MODE, key, iv, DecodeBase64(cipher_data));
         return new String(decrypted, "UTF-8");

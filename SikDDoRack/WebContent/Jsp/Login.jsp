@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"
+    import =  "Infomation.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -126,7 +127,7 @@ a{
 </head>
 <body>
 <div class="box">
-<form action="../Scriptlet/Login_Check.jsp" method = "post" target = "_parents">
+<form action=<%=WhiteList.instance.getWhitelistScript(0) %> method = "post" target = "_parents">
 	<h1 class="title">식또락<i class="fa fa-utensils"></i></h1>
 	<h1 class="title2" id="test">손님 로그인</h1>
 	<Input type = "text" name = "_id" placeholder="Username"/><p>
@@ -137,12 +138,12 @@ a{
 	</div>
 </form>
 <div class="sign_cus">
-<form action="../Frame/Sign_Up_Cus_Frame.jsp" method = "post">
+<form action=<%=WhiteList.instance.getWhitelistFrame(4) %> method = "post">
 	<input class="sign_btn" type = "submit" value = "손님회원가입"/><p>
 </form>
 </div>
 <div class="sign_sto">
-<form action="../Frame/Sign_Up_Sto_Frame.jsp" method = "post">
+<form action=<%=WhiteList.instance.getWhitelistFrame(5) %> method = "post">
 	<input class="sign_btn" type = "submit" value = "가게회원가입"/><p>
 </form>
 </div>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import = "Database.*" import = "Infomation.*" %>
+<%@ page import = "Database.*" 
+	import = "Infomation.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -144,6 +145,7 @@ body{
 	}
 	else if(session.getAttribute("user_type").equals("cus_user"))
 	{
+		
 		Customer customer = DB.instance.GetCusUser((String)session.getAttribute("id"));
 		
 		if(request.getParameter("_cus_pw") == null){
@@ -158,7 +160,7 @@ body{
 		}
 %>
 <div class="text">
-<Form class="box" action = "Modify_User.jsp" method = "post">
+<Form class="box" action = <%=WhiteList.instance.getWhitelistJsp(11) %> method = "post">
 <div class="center"><h1>회원 정보 수정</h1></div>
 	<div id="complete"><%=test %></div>
 	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"
+    import =  "Infomation.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,10 +11,10 @@
 	
 %>
 <frameset rows = "10%,*">
-	<frame src = "../Jsp/Top.jsp">
+	<frame src = <%=WhiteList.instance.getWhitelistJsp(0) %> name = "top">
 	<frameset cols = "15%, *">
-		<frame src = "../Jsp/MapMenu.jsp">
-		<frame src = "../Jsp/Map.jsp" name = "map">
+		<frame src = <%=WhiteList.instance.getWhitelistJsp(2) %>>
+		<frame src = <%=WhiteList.instance.getWhitelistJsp(1) %> name = "map">
 	</frameset>
 </frameset>
 <body>

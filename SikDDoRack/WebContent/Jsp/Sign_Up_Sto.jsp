@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"
+    import = "Infomation.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -98,7 +99,7 @@ body{
 </head>
 <body>
 <div class="text" >
-<form class="box" action="../Scriptlet/Sign_Up_Check.jsp" method = "post">
+<form class="box" action=<%=WhiteList.instance.getWhitelistScript(1) %> method = "post">
 	<div class="center"><h1>가게 회원 가입</h1></div>
 	 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 	가게 이름<br><Input type = "text" name = "_sto_name" placeholder="name"/><p>

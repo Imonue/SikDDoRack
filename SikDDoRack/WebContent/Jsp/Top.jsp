@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"
+    import =  "Infomation.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +19,7 @@
 	if(id == null || id.equals(""))
 	{
 %>		
-		<Form action = "../Frame/Login_Frame.jsp" method = "post" target = "_parent">
+		<Form action = <%=WhiteList.instance.getWhitelistFrame(3) %> method = "post" target = "_parent">
 			<input type = "submit" value = "로그인">
 		</Form>
 <%
@@ -27,17 +28,17 @@
 	{
 		out.println(id + "님 환영합니다!!");
 %>
-		<Form action = "../Frame/Modify_User_Frame.jsp" method = "post" target = "_parent">
+		<Form action = <%=WhiteList.instance.getWhitelistFrame(6) %> method = "post" target = "_parent">
 			<input type = "submit" value = "회원 정보 수정">
 		</Form>
-		<Form action = "../Scriptlet/Logout.jsp" method = "post" target = "_parent">
+		<Form action = <%=WhiteList.instance.getWhitelistScript(2) %> method = "post" target = "_parent">
 			<input type = "submit" value = "로그 아웃">
 		</Form>
 <%	
 		if (user_type.equals("sto_user"))
 		{
 			%>
-				<Form action = "../Frame/Store_Frame.jsp" method = "post" target = "_parent">
+				<Form action = <%=WhiteList.instance.getWhitelistFrame(2) %> method = "post" target = "_parent">
 					<input type = "submit" value = "내 가게 정보">
 				</Form>
 			<%

@@ -26,7 +26,7 @@
 		store = DB.instance.GetStoUser((String)session.getAttribute("id"));
 	}
 %>
-	<form action="Store_Status.jsp" method = "post">
+	<form action=<%=WhiteList.instance.getWhitelistJsp(6) %> method = "post">
 	
 		예약 가능 여부 <select name = "_sto_res_pos">
 				<option value = "가능" <%if(store.getSto_res_pos().equals("가능")) {%> selected <%}%>> 가능 </option>

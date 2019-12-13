@@ -103,7 +103,7 @@
 	else if(store.getSto_res_pos().equals("가능")) {		
 	%>
 	
-		<form action="Cus_Status2.jsp" method = "post">
+		<form action=<%=WhiteList.instance.getWhitelistJsp(4) %> method = "post">
 			예약 시간 <select name = "_res_date">
 				<option value = "11:00"> 11:00 </option>
 				<option value = "11:30">11:30</option>

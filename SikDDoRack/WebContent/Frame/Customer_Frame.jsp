@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"
+    import =  "Infomation.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +15,7 @@
 %>
 		<script>
      		alert( '로그인이 필요한 페이지입니다.' );
-     		location.href="../Frame/Main_Frame.jsp";
+     		location.href=<%=WhiteList.instance.getWhitelistFrame(0) %>;
     	</script>
 <%
 	}
@@ -23,12 +24,12 @@
 		if(user_type.equals("cus_user")) {
 %>
 		<frameset rows = "10%,*">
-			<frame src = "../Jsp/Top.jsp" name = "top">
+			<frame src = <%=WhiteList.instance.getWhitelistJsp(0) %> name = "top">
 			<frameset cols = "20%, *">
-				<frame src = "../Jsp/Menu.jsp" name = "menu">
+				<frame src = <%=WhiteList.instance.getWhitelistJsp(5) %> name = "menu">
 				<frameset rows = "50%,50%">
-					<frame src = "../Jsp/Cus_Status.jsp" name = "target1">
-					<frame src = "../Jsp/Cus_Status2.jsp" name = "target2">
+					<frame src = <%=WhiteList.instance.getWhitelistJsp(3) %> name = "target1">
+					<frame src = <%=WhiteList.instance.getWhitelistJsp(4) %> name = "target2">
 				</frameset>
 			</frameset>
 		</frameset>
@@ -39,7 +40,7 @@
 			%>
 			<script>
 	     		alert( '손님 계정만 이용가능한 페이지 입니다.' );
-	     		location.href="../Frame/Main_Frame.jsp";
+	     		location.href=<%=WhiteList.instance.getWhitelistFrame(0) %>;
 	    	</script>
 			<%
 		}

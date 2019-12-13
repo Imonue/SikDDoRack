@@ -45,7 +45,7 @@
 		DB.instance.AddCusUser(customer);
 	}
 	
-	response.sendRedirect("../Frame/Login_Frame.jsp");
+	response.sendRedirect(WhiteList.instance.getWhitelistFrame(3));
 %>
 </body>
 </html>

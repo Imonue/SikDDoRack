@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+    pageEncoding="EUC-KR"
+    import =  "Infomation.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +10,7 @@
 <body>
 <%
 	session.invalidate();
-	response.sendRedirect("../Frame/Main_Frame.jsp");
+	response.sendRedirect(WhiteList.instance.getWhitelistFrame(0));
 %>
 </body>
 </html>

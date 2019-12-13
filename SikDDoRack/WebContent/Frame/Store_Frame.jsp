@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"
+    import =  "Infomation.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,10 +12,10 @@
 	if(user_type.equals("sto_user")) {
 %>
 	<frameset rows = "10%,*">
-		<frame src = "../Jsp/Top.jsp" name = "top">
+		<frame src = <%=WhiteList.instance.getWhitelistJsp(0) %> name = "top">
 		<frameset cols = "20%, *">	
-			<frame src = "../Jsp/Store_Status.jsp" name = "target1">
-			<frame src = "../Jsp/Store_Status2.jsp" name = "target2">
+			<frame src = <%=WhiteList.instance.getWhitelistJsp(6) %> name = "target1">
+			<frame src = <%=WhiteList.instance.getWhitelistJsp(7) %> name = "target2">
 		</frameset>
 	</frameset>
 <%

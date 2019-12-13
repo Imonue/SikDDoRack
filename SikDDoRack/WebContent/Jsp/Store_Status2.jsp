@@ -38,7 +38,7 @@
 	}
 %>
 	<div style="width = 45%; border:1px solid black; float:left; margin-right:5%;">
-		<form action="Store_Status2.jsp" method="post">
+		<form action=<%=WhiteList.instance.getWhitelistJsp(7) %> method="post">
 			<h5>예약신청목록</h5>
 			<table border = 1>
 				<tr>
@@ -72,7 +72,7 @@
 		</form>
 	</div>
 	<div style="width = 45%; border:1px solid black; float:left; margin-right:5%;">
-		<form action="Store_Status2.jsp" method="post">
+		<form action=<%=WhiteList.instance.getWhitelistJsp(7) %> method="post">
 			<h5>예약확정목록</h5>
 			<table border = 1>
 				<tr>
