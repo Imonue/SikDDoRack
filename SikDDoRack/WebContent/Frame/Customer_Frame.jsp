@@ -15,7 +15,7 @@
 %>
 		<script>
      		alert( '로그인이 필요한 페이지입니다.' );
-     		location.href=<%=WhiteList.instance.getWhitelistFrame(0) %>;
+     		window.history.back();
     	</script>
 <%
 	}
@@ -40,7 +40,7 @@
 			%>
 			<script>
 	     		alert( '손님 계정만 이용가능한 페이지 입니다.' );
-	     		location.href=<%=WhiteList.instance.getWhitelistFrame(0) %>;
+	     		window.history.back();
 	    	</script>
 			<%
 		}
