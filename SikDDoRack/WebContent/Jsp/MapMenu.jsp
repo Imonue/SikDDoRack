@@ -51,6 +51,24 @@
 					<%
 				}
 			%>
+						<tr>
+				<td><p></td>
+			</tr>
+			<tr>
+				<td>PC방</td>
+			</tr>
+			<%
+				DB.instance.SetStoTypeList("PC방");
+				for(int i = 0; i < DB.instance.getStoreTypeList().size(); i++) {
+						
+					sto_name = DB.instance.getStoreTypeList().get(i).getSto_name();
+			%>
+			<tr>
+				<td><a href = "../Jsp/Map.jsp?_sto_name=<%=sto_name %>&_sto_type=PC방" target = "map"><%=sto_name %></a></td>
+			</tr>
+					<%
+				}
+			%>
 	</table>
 </body>
 </html>

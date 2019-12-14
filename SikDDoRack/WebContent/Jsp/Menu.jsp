@@ -49,7 +49,25 @@
 			<tr>
 				<td><a href = "../Frame/Customer_Frame.jsp?_sto_name=<%=sto_name %>" target = "_parent"><%=sto_name %></a></td>
 			</tr>
-					<%
+			<%
+				}
+			%>
+						<tr>
+				<td><p></td>
+			</tr>
+			<tr>
+				<td>PC방</td>
+			</tr>
+			<%
+				DB.instance.SetStoTypeList("PC방");
+				for(int i = 0; i < DB.instance.getStoreTypeList().size(); i++) {
+						
+					sto_name = DB.instance.getStoreTypeList().get(i).getSto_name();
+			%>
+			<tr>
+				<td><a href = "../Frame/Customer_Frame.jsp?_sto_name=<%=sto_name %>" target = "_parent"><%=sto_name %></a></td>
+			</tr>
+			<%
 				}
 			%>
 	</table>

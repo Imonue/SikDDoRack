@@ -108,9 +108,9 @@ body{
 	 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 	PW<br><Input type = "text" name = "_sto_pw" placeholder="Password"/><p>
 	 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-	점주 휴대폰 번호<br><Input type = "text" name = "_sto_tel" placeholder="PhoneNumber"/><p>
+	가게 번호<br><Input type = "text" name = "_sto_tel" placeholder="PhoneNumber"/><p>
 	 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-	가게 번호<br><Input type = "text" name = "_sto_phone" placeholder="StorePhoneNumber"/><p>
+	점주 휴대폰 번호<br><Input type = "text" name = "_sto_phone" placeholder="StorePhoneNumber"/><p>
 	 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 	가게 종류<br><select name = "_sto_type">
 			<option value = "음식점" selected>음식점</option>

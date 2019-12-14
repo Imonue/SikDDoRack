@@ -54,6 +54,7 @@ String stotype = request.getParameter("_sto_type");
 if(stoname == null || stotype == null)
 {
 	stotype = "음식점";
+
 	Map.instance.setLati(Map.instance.getInit_lati());
 	Map.instance.setLongi(Map.instance.getInit_longi());
 }
@@ -80,34 +81,38 @@ var pcPosition = new Array();
 int foodIndex = 0;
 int caffeIndex = 0;
 int pcIndex = 0;
-String sto_name;
+String food_store_name;
 for(int i = 0; i < DB.instance.GetStoCount(); i++){
 	if(DB.instance.getStoreList().get(i).getSto_type().equals("음식점"))
 	{
-		sto_name = DB.instance.getStoreList().get(i).getSto_name();
+		food_store_name = DB.instance.getStoreList().get(i).getSto_name();
 		//System.out.println("음식점 위도 경도 lati : " + DB.instance.getStoreList().get(i).getSto_lati() + " longi : " + DB.instance.getStoreList().get(i).getSto_longi());
 %>
-		foodPosition[<%=foodIndex%>] = {content: "<%=DB.instance.getStoreList().get(i).getSto_name()%><p>전체 테이블 : <%=DB.instance.getStoreList().get(i).getSto_max_table()%><p>현재 테이블 : <%=DB.instance.getStoreList().get(i).getSto_now_table()%><p><a href='../Frame/Customer_Frame.jsp?_sto_name=<%=sto_name %>' target='_parent'>예약하기</a>", latlng: new kakao.maps.LatLng(<%=DB.instance.getStoreList().get(i).getSto_lati()%>,<%=DB.instance.getStoreList().get(i).getSto_longi()%>)};
+		foodPosition[<%=foodIndex%>] = {content: "<%=DB.instance.getStoreList().get(i).getSto_name()%><p>전체 테이블 : <%=DB.instance.getStoreList().get(i).getSto_max_table()%><p>현재 테이블 : <%=DB.instance.getStoreList().get(i).getSto_now_table()%><p><a href='../Frame/Customer_Frame.jsp?_sto_name=<%=food_store_name %>' target='_parent'>예약하기</a>", latlng: new kakao.maps.LatLng(<%=DB.instance.getStoreList().get(i).getSto_lati()%>,<%=DB.instance.getStoreList().get(i).getSto_longi()%>)};
 <%
 		foodIndex++;
 	}
 }
+String caffe_store_name;
 for(int i = 0; i < DB.instance.GetStoCount(); i++){
 	if(DB.instance.getStoreList().get(i).getSto_type().equals("카페"))
-	{		
+	{	
+		caffe_store_name = DB.instance.getStoreList().get(i).getSto_name();
 		//System.out.println("카페 위도 경도 lati : " + DB.instance.getStoreList().get(i).getSto_lati() + " longi : " + DB.instance.getStoreList().get(i).getSto_longi());
 %>
-		caffePosition[<%=caffeIndex%>] = {content: "<a href='../Frame/Customer_Frame.jsp' target='_parent'>예약하기</a>", latlng: new kakao.maps.LatLng(<%=DB.instance.getStoreList().get(i).getSto_lati()%>,<%=DB.instance.getStoreList().get(i).getSto_longi()%>)};
+		caffePosition[<%=caffeIndex%>] = {content: "<%=DB.instance.getStoreList().get(i).getSto_name()%><p>전체 테이블 : <%=DB.instance.getStoreList().get(i).getSto_max_table()%><p>현재 테이블 : <%=DB.instance.getStoreList().get(i).getSto_now_table()%><p><a href='../Frame/Customer_Frame.jsp?_sto_name=<%=caffe_store_name %>' target='_parent'>예약하기</a>", latlng: new kakao.maps.LatLng(<%=DB.instance.getStoreList().get(i).getSto_lati()%>,<%=DB.instance.getStoreList().get(i).getSto_longi()%>)};
 <%
 		caffeIndex++;
 	}
 }
+String pc_name;
 for(int i = 0; i < DB.instance.GetStoCount(); i++){
 	if(DB.instance.getStoreList().get(i).getSto_type().equals("PC방"))
 	{		
+		pc_name = DB.instance.getStoreList().get(i).getSto_name();
 		//System.out.println("PC방 위도 경도 lati : " + DB.instance.getStoreList().get(i).getSto_lati() + " longi : " + DB.instance.getStoreList().get(i).getSto_longi());
 %>
-		pcPosition[<%=pcIndex%>] = {content: "<a href='../Frame/Customer_Frame.jsp' target='_parent'>예약하기</a>", latlng: new kakao.maps.LatLng(<%=DB.instance.getStoreList().get(i).getSto_lati()%>,<%=DB.instance.getStoreList().get(i).getSto_longi()%>)};
+		pcPosition[<%=pcIndex%>] = {content: "<%=DB.instance.getStoreList().get(i).getSto_name()%><p>전체 테이블 : <%=DB.instance.getStoreList().get(i).getSto_max_table()%><p>현재 테이블 : <%=DB.instance.getStoreList().get(i).getSto_now_table()%><p><a href='../Frame/Customer_Frame.jsp?_sto_name=<%=pc_name %>' target='_parent'>예약하기</a>", latlng: new kakao.maps.LatLng(<%=DB.instance.getStoreList().get(i).getSto_lati()%>,<%=DB.instance.getStoreList().get(i).getSto_longi()%>)};
 <%
 		pcIndex++;
 	}
@@ -235,7 +240,7 @@ function setFoodMarkers(map) {
     }        
 }
 
-//주차장 마커를 생성하고 주차장 마커 배열에 추가하는 함수입니다
+//PC방 마커를 생성하고 PC방 마커 배열에 추가하는 함수입니다
 function createPCMarkers() {
     for (var i = 0; i < pcPosition.length; i++) {
         
@@ -244,12 +249,19 @@ function createPCMarkers() {
                 spriteOrigin: new kakao.maps.Point(10, 72),    
                 spriteSize: new kakao.maps.Size(36, 98)  
             };       
+        
+        var position = pcPosition[i].latlng;
+        var content = pcPosition[i].content;
      
         // 마커이미지와 마커를 생성합니다
         var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions),    
-            marker = createMarker(pcPosition[i].latlng, markerImage);  
+            marker = createMarker(position, markerImage, content);  
 
-        // 생성된 마커를 주차장 마커 배열에 추가합니다
+        <%
+			System.out.println("PC방 마커 생성");
+		%>
+	
+        // 생성된 마커를 PC방 마커 배열에 추가합니다
         pcMarkers.push(marker);        
     }                
 }

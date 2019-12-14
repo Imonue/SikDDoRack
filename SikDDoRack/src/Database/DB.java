@@ -179,7 +179,7 @@ public class DB {
 			stmt.setString(2,  store.getSto_tel());
 			stmt.setString(3,  store.getSto_phone());
 			stmt.setInt(4,  store.getSto_max_table());
-			stmt.setInt(5,  store.getSto_max_table());
+			stmt.setInt(5,  store.getSto_now_table());
 			stmt.setString(6,  store.getSto_res_pos());
 			stmt.setString(7,  sto_id);
 			
