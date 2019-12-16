@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import = "Database.*" 
-	import = "Infomation.*" %>
+	import = "Infomation.*"
+	import = "Security.*"  %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,10 +16,9 @@ body{
 	margin: 0;
 	padding: 0;
 	font-family: sans-serif;
-	background: #34495e;
 }
 .text{
-	color: white;
+	color: black;
 	font-weight: 300;
 	font-size: 13px;
 }
@@ -28,15 +28,18 @@ body{
 .box{
 	width: 300px;
 	height: 450px;
-	padding: 20px 40px 40px 40px;
+	padding: 0 0 20px 0;
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%,-50%);
-	background: #191919;
+	border: 2px solid orange;
 	 overflow: auto;
 }
 .box h1{
+	padding: 20px;
+	margin: 0px;
+	background-color: orange;
 	color: white;
 	font-weight: 500;
 	text-align: center;
@@ -47,10 +50,10 @@ body{
 	background: none;
 	display: block;
 	text-align: center;
-	border: 2px solid #3498db;
+	border: 1.5px solid black;
 	width: 200px;
 	outline: none;
-	color: white;
+	color: black;
 	border-radius: 24px;
 	transition: 0.25s;
 	padding: 10px 10px;
@@ -58,17 +61,17 @@ body{
 	
 }
 .box input[type="text"]:focus,.box input[type="password"]:focus{
-	width: 280px;
-	border-color: #2ecc71;
+	width: 260px;
+	border-color: orange;
 }
 .box input[type="submit"],.box input[type="reset"]{
 	border:0;
 	background: none;
 	display: inline;
 	text-align: center;
-	border: 2px solid #2ecc71;
+	border: 2px solid orange;
 	outline: none;
-	color: white;
+	color: black;
 	border-radius: 24px;
 	transition: 0.25s;
 	cursor: pointer;
@@ -77,17 +80,17 @@ body{
 }
 
 .box input[type="submit"]:hover{
-	background: #2ecc71; 
+	background: orange; 
+	color: white;
 }
 .box select{
 	border:0;
-	background: #191919;
 	display: block;
 	text-align: right;
-	border: 2px solid #3498db;
+	border: 1.5px solid black;
 	width: 224px;
 	outline: none;
-	color: white;
+	color: black;
 	border-radius: 24px;
 	transition: 0.25s;
 	padding: 10px 10px 10px 87px;
@@ -112,7 +115,10 @@ body{
 		}
 		else{
 			test = "수정이 완료되었습니다.";
-			store.setSto_pw(request.getParameter("_sto_pw"));
+			store.setSto_id(request.getParameter("_sto_id"));
+			
+			String pw = Security.Sha256(request.getParameter("_sto_pw"));
+			
 			store.setSto_tel(request.getParameter("_sto_tel"));
 			store.setSto_phone(request.getParameter("_sto_phone"));
 			store.setSto_max_table(Integer.parseInt(request.getParameter("_sto_max_table")));
@@ -122,7 +128,7 @@ body{
 %>
 <div class="text">
 <Form class="box" action = "Modify_User.jsp" method = "post">
-	<div class="center"><h1>회원 정보 수정</h1></div>
+	<div class="center"><h1>회원 정보 수정</h1></div><p>
 	<div id="complete"><%=test %></div>
 	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;	
 	ID <input type = "text" name = "_sto_id" value = <%=store.getSto_id()%> disabled="disabled"><p>
@@ -137,7 +143,8 @@ body{
 	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 	가게 최대 테이블 <input type = "text" name = "_sto_max_table" value = <%=store.getSto_max_table()%>><p>
 	<div class="cneter">
-	<input type = "submit" value = "회원 정보 수정">
+	 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+	 <input type = "submit" value = "회원 정보 수정"/>
 	</div>
 </Form>
 </div>
@@ -153,7 +160,8 @@ body{
 		}
 		else{
 			test = "수정이 완료되었습니다.";
-			customer.setCus_pw(request.getParameter("_cus_pw"));
+			String pw = Security.Sha256(request.getParameter("_cus_pw"));
+			customer.setCus_pw(pw);
 			customer.setCus_phone(request.getParameter("_cus_phone"));
 			
 			DB.instance.UpdateCusUser(customer, (String)session.getAttribute("id"));
@@ -161,7 +169,7 @@ body{
 %>
 <div class="text">
 <Form class="box" action = <%=WhiteList.instance.getWhitelistJsp(11) %> method = "post">
-<div class="center"><h1>회원 정보 수정</h1></div>
+<div class="center"><h1>회원 정보 수정</h1></div><p>
 	<div id="complete"><%=test %></div>
 	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 	ID <input type = "text" name = "_cus_id" value = <%=customer.getCus_id()%> disabled="disabled"><p>

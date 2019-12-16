@@ -10,6 +10,72 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<style>
+body{
+	margin: 0;
+}
+#main{
+	color: white;
+	background-color: orange;
+	text-align: center;
+	margin: 0;
+	padding: 32px 10px 32px 10px;
+}
+.parta{
+	border-right: 2px solid orange;
+	display: inline;
+	position: fixed;
+	top: 0%;
+	left: 0%;
+	width: 49.8%;
+	height: 100%;
+	
+}
+.partb{
+	border-left: 2px solid orange;
+	display: inline;
+	position: fixed;
+	top: 0%;
+	left:50.2%;
+	width: 49.8%;	
+	height: 100%;
+}
+.parta_table,.partb_table{
+	width: 400px;
+	text-align: center;
+}
+.parta_tablebox,.partb_tablebox{
+	position: absolute;
+	width: 400px;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+}
+td{
+	border: 1px solid black;
+}
+.btn{
+	text-align: center;
+}
+input[type="submit"]{
+	border:0;
+	background: none;
+	display: inline;
+	text-align: center;
+	border: 2px solid gray;
+	outline: none;
+	color: black;
+	border-radius: 24px;
+	transition: 0.25s;
+	cursor: pointer;
+	padding: 6px 20px;
+	margin: 5px auto;
+}
+input[type="submit"]:hover{
+	background: gray;
+	color: white; 
+}
+</style>
 <body>
 <%
 	request.setCharacterEncoding("utf-8");
@@ -37,10 +103,11 @@
 		}
 	}
 %>
-	<div style="width = 45%; border:1px solid black; float:left; margin-right:5%;">
-		<form action=<%=WhiteList.instance.getWhitelistJsp(7) %> method="post">
-			<h5>예약신청목록</h5>
-			<table border = 1>
+	
+	<div class = "parta"><h2 id = "main" >예약신청목록</h2>
+		<div class = "parta_tablebox">
+		<form action=<%=WhiteList.instance.getWhitelistJsp(7) %> method="post">	
+			<table class = "parta_table">
 				<tr>
 					<td></td>
 					<td>아이디</td>
@@ -67,14 +134,18 @@
 					}
 				%>
 			</table>
+			<div class="btn">
 			<input type = "submit" name = "_type" value = "확인">
-			<input type = "submit" name = "_type" value = "거절">
+			<input type = "submit" name = "_type" value = "거절">	
+			</div>
 		</form>
+		</div>
 	</div>
-	<div style="width = 45%; border:1px solid black; float:left; margin-right:5%;">
+		
+	<div class = "partb"><h2 id = "main" >예약확정목록</h2>
+		<div class = "partb_tablebox">
 		<form action=<%=WhiteList.instance.getWhitelistJsp(7) %> method="post">
-			<h5>예약확정목록</h5>
-			<table border = 1>
+			<table class = "partb_table">
 				<tr>
 					<td></td>
 					<td>아이디</td>
@@ -101,8 +172,11 @@
 					}
 				%>
 			</table>
+			<div class="btn">
 			<input type = "submit" name = "_type" value = "취소">
+			</div>
 		</form>
+		</div>
 	</div>
 </body>
 </html>

@@ -8,13 +8,31 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<style>
+body{
+	font-family: sans-serif;
+	font-size: 20px;
+	margin: 3%;
+	overflow-y: hidden; overflow-x: hidden;
+}
+td{
+	padding: 5px;
+}
+.center{
+	position: relative;
+	width: 100%;
+	height: 190px;
+	padding: 10px;
+	left: 20%;
+}
+</style>
 <body>
 <%
 	//가게 정보 표시 페이지 
 	request.setCharacterEncoding("utf-8");
 	Store store = DB.instance.GetStoUserName((String)session.getAttribute("sto_name"));
 %>
-	<table>
+	<table class="center">
 		<tr>
 			<td>가게이름</td>
 			<td><%=store.getSto_name()%></td>
@@ -40,6 +58,5 @@
 			<td><%=store.getSto_res_pos()%></td>
 		</tr>
 	</table>
-
 </body>
 </html>

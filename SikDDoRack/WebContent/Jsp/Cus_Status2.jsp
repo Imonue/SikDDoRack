@@ -9,8 +9,41 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<style>
+body{
+	font-family: sans-serif;
+	font-size: 20px;
+	margin: 3%;
+	overflow-y: hidden; overflow-x: hidden;
+}
+img{
+	position: relative;
+	top: 20px;
+	left: 30px;
+	width: 220px;
+	height: 220px;
+}
+.box_imp{
+	position: relative;
+	top: -50px;
+	left: 0px;
+	padding-left: 50px;
+	display:inline-block;
+	width: 500px;
+}
+.box_pos{
+	position: relative;
+	top: 0px;
+	left: 0px;
+	padding-left: 50px;
+	display:inline-block;
+	width: 500px;
+}
+</style>
 <body>
-<h1>예약 신청</h1>
+
+
+
 <%
 	// 예약 신청을 하는 페이지, 선택한 가게에 예약이 있으면 해당 예약 정보 표시
 	Thread.sleep(100);
@@ -65,7 +98,8 @@
 	
 	if(reser.getRes_id() != null) {
 		%>
-		
+		<div class = "box_pos">
+		<h1 class = "h1_1">예약 신청</h1>
 		<h3>예약신청이 접수되었습니다.</h3><p>
 		<table>
 			<tr>
@@ -76,13 +110,15 @@
 		</table>
 		
 		<form action= "Cus_Status2.jsp" method = "post">
-			<input type = "submit" value = "예약취소">
+			<p><input type = "submit" value = "예약취소">
 			<Input type = "hidden" name = "_type" value = "res_cancel">
 		</form>
 		<%		
 	}
 	else if (reser_com.getRes_id_com() != null) {
 		%>
+		<div class = "box_pos">
+		<h1>예약 신청</h1>
 		
 		<h3>예약신청이 확정되었습니다.</h3><p>
 		<table>
@@ -102,7 +138,8 @@
 	
 	else if(store.getSto_res_pos().equals("가능")) {		
 	%>
-	
+	<div class = "box_pos">
+	<h1>예약 신청</h1>
 		<form action=<%=WhiteList.instance.getWhitelistJsp(4) %> method = "post">
 			예약 시간 <select name = "_res_date">
 				<option value = "11:00"> 11:00 </option>
@@ -145,12 +182,21 @@
 			<Input type = "submit" value = "신청">	
 		</form>
 		
+		
 	<%
 	}
 	else {
+		
+		out.println("<div class = 'box_imp'>");
+		out.println("<h1>예약 신청</h1>");
 		out.println("현재 이 가게는 예약이 불가능합니다.");
-		out.println(store.getSto_res_pos());
+
+		
 	}
 %>
+</div>
+<img src="img/imghi.png">
+
+
 </body>
 </html>

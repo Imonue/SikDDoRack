@@ -11,11 +11,11 @@
 	String user_type = (String)session.getAttribute("user_type");
 	if(user_type.equals("sto_user")) {
 %>
-	<frameset rows = "10%,*">
-		<frame src = <%=WhiteList.instance.getWhitelistJsp(0) %> name = "top">
-		<frameset cols = "20%, *">	
-			<frame src = <%=WhiteList.instance.getWhitelistJsp(6) %> name = "target1">
-			<frame src = <%=WhiteList.instance.getWhitelistJsp(7) %> name = "target2">
+	<frameset rows = "56px,*">
+		<frame frameborder="0" src = <%=WhiteList.instance.getWhitelistJsp(0) %> name = "top">
+		<frameset cols = "300px, *">	
+			<frame frameborder="0" style="border:5px; border-color:orange; border-style:solid;" src = <%=WhiteList.instance.getWhitelistJsp(6) %> name = "target1">
+			<frame frameborder="0" style="border:5px; border-color:orange; border-style:solid;" src = <%=WhiteList.instance.getWhitelistJsp(7) %> name = "target2">
 		</frameset>
 	</frameset>
 <%

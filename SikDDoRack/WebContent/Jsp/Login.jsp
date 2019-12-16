@@ -12,106 +12,86 @@ body{
 	margin: 0;
 	padding: 0;
 	font-family: sans-serif;
-	background: #34495e;
-}
-p{
-	margin: 10px;
 }
 .box{
-	width: 450px;
-	height: 400px;
-	padding: 40px;
+	width: 400px;
+	padding: 0 0 20px 0;
 	position: absolute;
 	top: 45%;
 	left: 50%;
 	transform: translate(-50%,-50%);
-	text-align: center;
-	background-image: url("img/img_loginbox.png");
-	background-repeat: no-repeat;
-    background-position: center bottom;
-    background-size: 100% 350px;
+}
+.box2{
+	width: 400px;
+	padding: 0 0 20px 0;
+
+	border: 2px solid orange;
 }
 .title{
-	margin: 40px 40px 20px 40px;
+	padding: 20px;
+	margin: 0px;
+	color: black;
+	font-weight: 500;
+	text-align: center;
+	font-size: 32px;	
 }
 .title2{
+	padding: 20px;
+	margin: 0px;
+	background-color: orange;
 	color: white;
 	font-weight: 500;
-	margin: 5px;
+	text-align: center;
+	font-size: 32px;	
 }
 .box input[type="text"],.box input[type="password"]{
-	border: 0;
+	border:0;
 	background: none;
+	display: block;
 	text-align: center;
-	border: 2px solid #3498db;
-	width: 200px;
+	border: 1.5px solid black;
+	width: 300px;
 	outline: none;
-	color: white;
+	color: black;
 	border-radius: 24px;
 	transition: 0.25s;
 	padding: 10px 10px;
 	margin: 5px auto;
-	}
+}
 .box input[type="text"]:focus,.box input[type="password"]:focus{
-	width: 280px;
-	border-color: #2ecc71;
-}
-.loginbtn{
-	border:0;
-	background: none;
-	display: block;
-	text-align: center;
-	border: 2px solid #2ecc71;
-	outline: none;
-	color: white;
-	border-radius: 24px;
-	transition: 0.25s;
-	cursor: pointer;
-	padding: 10px 40px;
-	margin: 5px auto;
-}	
-.loginbtn:hover{
-	background: #2ecc71; 
-}
-.sign_cus{
-	position: absolute;
-	top: 80%;
-	left: 7%;
-}
-.sign_sto{
-	position: absolute;
-	top: 80%;
-	left: 80%;
-}
-.sign_btn{
-	border:0;
-	background: none;
-	display: block;
-	margin: 20px auto;
-	text-align: center;
-	border: 2px solid #34495e;
-	padding: 5px 5px;
-	outline: none;
-	color: white;
-	border-radius: 24px;
-	transition: 0.25s;
-	cursor: pointer;
-}
-.sign_btn:hover{
-	background: #34495e; 
-}
-a{
-	border: 0;
-	background: none;
-	text-align: center;
-	outline: none;
-	color: white;
-	border-radius: 24px;
-	transition: 0.25s;
-	text-decoration:none
+	width: 360px;
+	border-color: orange;
 }
 .radio_font{
+	text-align: center;
+}
+.box input[type="submit"]{
+	border:0;
+	background: none;
+	display: block;
+	text-align: center;
+	border: 2px solid orange;
+	outline: none;
+	color: black;
+	border-radius: 24px;
+	transition: 0.25s;
+	cursor: pointer;
+	padding: 10px 60px;
+	margin: 5px auto;
+}
+.box input[type="submit"]:hover{
+	background: orange; 
 	color: white;
+}
+.btn_cus{
+  margin-right: 20px;
+}
+.btn_cus,.btn_sto{
+	color: gray;
+	text-decoration:none
+}
+.sign{
+	text-align: center;
 }
 </style>
 <script type="text/javascript">
@@ -119,7 +99,7 @@ a{
 		var tag = "손님 로그인";
 		document.getElementById("test").innerHTML = tag;
 	}
-	function checkSto(){
+	function checkSto(){	
 		var tag = "가게 로그인";
 		document.getElementById("test").innerHTML = tag;
 	}
@@ -127,25 +107,28 @@ a{
 </head>
 <body>
 <div class="box">
+<h1 class="title">식또락<i class="fa fa-utensils"></i></h1>
+<div class="box2">
 <form action=<%=WhiteList.instance.getWhitelistScript(0) %> method = "post" target = "_parents">
-	<h1 class="title">식또락<i class="fa fa-utensils"></i></h1>
 	<h1 class="title2" id="test">손님 로그인</h1>
+	<br>
 	<Input type = "text" name = "_id" placeholder="Username"/><p>
 	<Input type = "password" name = "_pw" placeholder="Password"/><p>
 	<input class="loginbtn" type = "submit" value = "로그인"/><p>
-	<div class="radio_font"> 사용자 :  <Input type = "radio" name = "_user_type" value = "_cus" id="logcus" checked="checked" onclick="checkCus()">손님
+	<div class="radio_font"><Input type = "radio" name = "_user_type" value = "_cus" id="logcus" checked="checked" onclick="checkCus()">손님
 	<Input type = "radio" name = "_user_type" value = "_sto" id="logsto" onclick="checkSto()"/>가게
 	</div>
 </form>
-<div class="sign_cus">
-<form action=<%=WhiteList.instance.getWhitelistFrame(4) %> method = "post">
-	<input class="sign_btn" type = "submit" value = "손님회원가입"/><p>
-</form>
+
 </div>
-<div class="sign_sto">
-<form action=<%=WhiteList.instance.getWhitelistFrame(5) %> method = "post">
-	<input class="sign_btn" type = "submit" value = "가게회원가입"/><p>
-</form>
+<div class = "sign">
+
+<a class="btn_cus" href=<%=WhiteList.instance.getWhitelistFrame(4) %>>
+	손님 회원가입
+</a>
+<a class="btn_sto" href=<%=WhiteList.instance.getWhitelistFrame(5) %>>
+	가게 회원가입
+</a>
 </div>
 </div>
 </body>

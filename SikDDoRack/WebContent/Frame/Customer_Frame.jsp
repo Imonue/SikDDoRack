@@ -23,13 +23,13 @@
 	{
 		if(user_type.equals("cus_user")) {
 %>
-		<frameset rows = "10%,*">
-			<frame src = <%=WhiteList.instance.getWhitelistJsp(0) %> name = "top">
-			<frameset cols = "20%, *">
-				<frame src = <%=WhiteList.instance.getWhitelistJsp(5) %> name = "menu">
+		<frameset rows = "56px,*">
+			<frame frameborder="0" src = <%=WhiteList.instance.getWhitelistJsp(0) %> name = "top">
+			<frameset cols = "25%, *">
+				<frame frameborder="0" style="border:5px; border-color:orange; border-style:solid;" src = <%=WhiteList.instance.getWhitelistJsp(5) %> name = "menu">
 				<frameset rows = "50%,50%">
-					<frame src = <%=WhiteList.instance.getWhitelistJsp(3) %> name = "target1">
-					<frame src = <%=WhiteList.instance.getWhitelistJsp(4) %> name = "target2">
+					<frame frameborder="0" style="border:5px; border-color:orange; border-style:solid;" src = <%=WhiteList.instance.getWhitelistJsp(3) %> name = "target1">
+					<frame frameborder="0" style="border:5px; border-color:orange; border-style:solid;" src = <%=WhiteList.instance.getWhitelistJsp(4) %> name = "target2">
 				</frameset>
 			</frameset>
 		</frameset>

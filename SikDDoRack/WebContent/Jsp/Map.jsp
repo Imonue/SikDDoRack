@@ -7,13 +7,27 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <style>
+body{overflow-y: hidden; overflow-x: hidden;}
+.top{
+	font-weight: bold;
+	background-color: orange;
+	width: 152px;
+	height: 50px;
+	line-height: 50px;
+	display: block;
+	text-align: center;
+	color: white;
+	
+}
+
 #mapwrap{position:relative;overflow:hidden;}
 .category, .category *{margin:0;padding:0;color:#000;}   
 .category {position:absolute;overflow:hidden;top:10px;left:10px;width:150px;height:50px;z-index:10;border:1px solid black;font-family:'Malgun Gothic','맑은 고딕',sans-serif;font-size:12px;text-align:center;background-color:#fff;}
 .category .menu_selected {background:#FF5F4A;color:#fff;border-left:1px solid #915B2F;border-right:1px solid #915B2F;margin:0 -1px;} 
 .category li{list-style:none;float:left;width:50px;height:45px;padding-top:5px;cursor:pointer;} 
-.category .ico_comm {display:block;margin:0 auto 2px;width:22px;height:26px;background:url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/category.png') no-repeat;} 
+.category .ico_comm {display:block;margin:0 auto 2px;width:22px;height:26px;background:url('img/marker.png') no-repeat;} 
 .category .ico_caffe {background-position:-10px 0;}  
 .category .ico_food {background-position:-10px -36px;}   
 .category .ico_pc {background-position:-10px -72px;} 
@@ -45,7 +59,7 @@
 <script>
 
 <%
-Thread.sleep(500);
+//Thread.sleep(500);
 request.setCharacterEncoding("UTF-8");
 
 String stoname = request.getParameter("_sto_name");
@@ -88,7 +102,7 @@ for(int i = 0; i < DB.instance.GetStoCount(); i++){
 		food_store_name = DB.instance.getStoreList().get(i).getSto_name();
 		//System.out.println("음식점 위도 경도 lati : " + DB.instance.getStoreList().get(i).getSto_lati() + " longi : " + DB.instance.getStoreList().get(i).getSto_longi());
 %>
-		foodPosition[<%=foodIndex%>] = {content: "<%=DB.instance.getStoreList().get(i).getSto_name()%><p>전체 테이블 : <%=DB.instance.getStoreList().get(i).getSto_max_table()%><p>현재 테이블 : <%=DB.instance.getStoreList().get(i).getSto_now_table()%><p><a href='../Frame/Customer_Frame.jsp?_sto_name=<%=food_store_name %>' target='_parent'>예약하기</a>", latlng: new kakao.maps.LatLng(<%=DB.instance.getStoreList().get(i).getSto_lati()%>,<%=DB.instance.getStoreList().get(i).getSto_longi()%>)};
+		foodPosition[<%=foodIndex%>] = {content: "<div class='top'><%=DB.instance.getStoreList().get(i).getSto_name()%></div><p> 전체 테이블 : <%=DB.instance.getStoreList().get(i).getSto_max_table()%><p> 현재 테이블 : <%=DB.instance.getStoreList().get(i).getSto_now_table()%><p><a href='../Frame/Customer_Frame.jsp?_sto_name=<%=food_store_name %>' target='_parent'> 예약하기</a>", latlng: new kakao.maps.LatLng(<%=DB.instance.getStoreList().get(i).getSto_lati()%>,<%=DB.instance.getStoreList().get(i).getSto_longi()%>)};
 <%
 		foodIndex++;
 	}
@@ -100,7 +114,7 @@ for(int i = 0; i < DB.instance.GetStoCount(); i++){
 		caffe_store_name = DB.instance.getStoreList().get(i).getSto_name();
 		//System.out.println("카페 위도 경도 lati : " + DB.instance.getStoreList().get(i).getSto_lati() + " longi : " + DB.instance.getStoreList().get(i).getSto_longi());
 %>
-		caffePosition[<%=caffeIndex%>] = {content: "<%=DB.instance.getStoreList().get(i).getSto_name()%><p>전체 테이블 : <%=DB.instance.getStoreList().get(i).getSto_max_table()%><p>현재 테이블 : <%=DB.instance.getStoreList().get(i).getSto_now_table()%><p><a href='../Frame/Customer_Frame.jsp?_sto_name=<%=caffe_store_name %>' target='_parent'>예약하기</a>", latlng: new kakao.maps.LatLng(<%=DB.instance.getStoreList().get(i).getSto_lati()%>,<%=DB.instance.getStoreList().get(i).getSto_longi()%>)};
+		caffePosition[<%=caffeIndex%>] = {content: "<div class='top'><%=DB.instance.getStoreList().get(i).getSto_name()%></div><p>전체 테이블 : <%=DB.instance.getStoreList().get(i).getSto_max_table()%><p>현재 테이블 : <%=DB.instance.getStoreList().get(i).getSto_now_table()%><p><a href='../Frame/Customer_Frame.jsp?_sto_name=<%=caffe_store_name %>' target='_parent'>예약하기</a>", latlng: new kakao.maps.LatLng(<%=DB.instance.getStoreList().get(i).getSto_lati()%>,<%=DB.instance.getStoreList().get(i).getSto_longi()%>)};
 <%
 		caffeIndex++;
 	}
@@ -112,7 +126,7 @@ for(int i = 0; i < DB.instance.GetStoCount(); i++){
 		pc_name = DB.instance.getStoreList().get(i).getSto_name();
 		//System.out.println("PC방 위도 경도 lati : " + DB.instance.getStoreList().get(i).getSto_lati() + " longi : " + DB.instance.getStoreList().get(i).getSto_longi());
 %>
-		pcPosition[<%=pcIndex%>] = {content: "<%=DB.instance.getStoreList().get(i).getSto_name()%><p>전체 테이블 : <%=DB.instance.getStoreList().get(i).getSto_max_table()%><p>현재 테이블 : <%=DB.instance.getStoreList().get(i).getSto_now_table()%><p><a href='../Frame/Customer_Frame.jsp?_sto_name=<%=pc_name %>' target='_parent'>예약하기</a>", latlng: new kakao.maps.LatLng(<%=DB.instance.getStoreList().get(i).getSto_lati()%>,<%=DB.instance.getStoreList().get(i).getSto_longi()%>)};
+		pcPosition[<%=pcIndex%>] = {content: "<div class='top'><%=DB.instance.getStoreList().get(i).getSto_name()%></div><p>전체 테이블 : <%=DB.instance.getStoreList().get(i).getSto_max_table()%><p>현재 테이블 : <%=DB.instance.getStoreList().get(i).getSto_now_table()%><p><a href='../Frame/Customer_Frame.jsp?_sto_name=<%=pc_name %>' target='_parent'>예약하기</a>", latlng: new kakao.maps.LatLng(<%=DB.instance.getStoreList().get(i).getSto_lati()%>,<%=DB.instance.getStoreList().get(i).getSto_longi()%>)};
 <%
 		pcIndex++;
 	}
@@ -120,7 +134,7 @@ for(int i = 0; i < DB.instance.GetStoCount(); i++){
 %>
 
 
-var markerImageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/category.png';  // 마커이미지의 주소입니다. 스프라이트 이미지 입니다
+var markerImageSrc = 'img/marker.png';  // 마커이미지의 주소입니다. 스프라이트 이미지 입니다
 caffeMarkers = [], // 커피숍 마커 객체를 가지고 있을 배열입니다
 foodMarkers = [], // 편의점 마커 객체를 가지고 있을 배열입니다
 pcMarkers = []; // 주차장 마커 객체를 가지고 있을 배열입니다

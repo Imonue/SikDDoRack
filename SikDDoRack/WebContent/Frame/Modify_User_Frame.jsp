@@ -8,8 +8,8 @@
 <title>Insert title here</title>
 </head>
 <frameset rows = "10%,*">
-	<frame src = <%=WhiteList.instance.getWhitelistJsp(0) %>>
-	<frame src = <%=WhiteList.instance.getWhitelistJsp(11) %>>
+	<frame frameborder="0" src = <%=WhiteList.instance.getWhitelistJsp(0) %>>
+	<frame frameborder="0" src = <%=WhiteList.instance.getWhitelistJsp(11) %>>
 </frameset>
 <body>
 
